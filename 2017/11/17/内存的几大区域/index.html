@@ -83,14 +83,19 @@
 <meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="内存的几大区域">
-<meta property="og:url" content="http://yoursite.com/2017/11/17/内存的几大区域/内存的几大区域/index.html">
+<meta property="og:url" content="http://yoursite.com/2017/11/17/内存的几大区域/index.html">
 <meta property="og:site_name" content="渐行渐远的博客">
 <meta property="og:description" content="内存的几大区域1. 栈区(stack) 栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点时有限制，数据不灵活。［先进后出］  栈空间分静态分配 和动态分配两种。 静态分配是编译器完成的，比如自动变量(auto)的分配。动态分配由alloca函数完成。栈的动态分配无需释放(是自动的)，也就没有释放函数。为可移植的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-17T10:28:03.000Z">
+<meta property="og:image" content="http://yoursite.com/2017/11/17/内存的几大区域/pic1.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/11/17/内存的几大区域/pic2.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/11/17/内存的几大区域/pic3.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/11/17/内存的几大区域/pic4.png">
+<meta property="og:updated_time" content="2017-11-17T10:30:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="内存的几大区域">
 <meta name="twitter:description" content="内存的几大区域1. 栈区(stack) 栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点时有限制，数据不灵活。［先进后出］  栈空间分静态分配 和动态分配两种。 静态分配是编译器完成的，比如自动变量(auto)的分配。动态分配由alloca函数完成。栈的动态分配无需释放(是自动的)，也就没有释放函数。为可移植的">
+<meta name="twitter:image" content="http://yoursite.com/2017/11/17/内存的几大区域/pic1.jpg">
 
 
 
@@ -120,7 +125,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/11/17/内存的几大区域/内存的几大区域/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/11/17/内存的几大区域/"/>
 
 
 
@@ -233,7 +238,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/17/内存的几大区域/内存的几大区域/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/17/内存的几大区域/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="渐行渐远">
@@ -322,9 +327,9 @@
 <h2 id="5-代码区"><a href="#5-代码区" class="headerlink" title="5. 代码区"></a>5. 代码区</h2><blockquote>
 <p>代码区 存放函数的二进制代码</p>
 </blockquote>
-
-
-<h4 id="例子代码："><a href="#例子代码：" class="headerlink" title="例子代码："></a>例子代码：</h4>
+<img src="/2017/11/17/内存的几大区域/pic1.jpg" title="图片来源见水印">
+<img src="/2017/11/17/内存的几大区域/pic2.jpg" title="图片来源见水印">
+<h4 id="例子代码："><a href="#例子代码：" class="headerlink" title="例子代码："></a>例子代码：</h4><img src="/2017/11/17/内存的几大区域/pic3.jpg" title="图片来源见水印">
 <h2 id="可能被追问的问题一："><a href="#可能被追问的问题一：" class="headerlink" title="可能被追问的问题一："></a>可能被追问的问题一：</h2><blockquote>
 <p>1.栈区 (stack [stæk]):<br>由编译器自动分配释放<br>局部变量是保存在栈区的<br>方法调用的实参也是保存在栈区的</p>
 <p>2.堆区 (heap [hiːp]):<br>由程序员分配释放，若程序员不释放，会出现内存泄漏，赋值语句右侧 使用 new 方法创建的对象，被创建对象的所有 成员变量！</p>
@@ -346,7 +351,7 @@
 <p>栈：栈是向低地址扩展的数据结构，是一块连续的内存的区域。<br>是栈顶的地址和栈的最大容量是系统预先规定好的，栈的大小是2M（也有的说是1M，总之是一个编译时就确定的常数 ) ,如果申请的空间超过栈的剩余空间时，将提示overflow。<br>因此，能从栈获得的空间较小。</p>
 <p>堆：堆是向高地址扩展的数据结构，是不连续的内存区域。<br>这是由于系统是用链表来存储的空闲内存地址的，自然是不连续的，而链表的遍历方向是由低地址向高地址。<br>堆的大小受限于计算机系统中有效的虚拟内存。<br>由此可见，堆获得的空间比较灵活，也比较大。</p>
 </blockquote>
-
+<img src="/2017/11/17/内存的几大区域/pic4.png" title="图片来源见水印">
 <p> 栈：<br> 由系统自动分配，速度较快，不会产生内存碎片  </p>
 <p> 堆：是由alloc分配的内存，速度比较慢，而且容易产生内存碎片，不过用起来最方便<br> 打个比喻来说：<br> 使用栈就象我们去饭馆里吃饭，只管点菜（发出申请）、付钱、和吃（使用），吃饱了就走，不必理会切菜、洗菜等准备工作和洗碗、刷锅等扫尾工作，他的好处是快捷，但是自由度小。<br> 使用堆就象是自己动手做喜欢吃的菜肴，比较麻烦，但是比较符合自己的口味，而且自由度大。</p>
 </blockquote>
