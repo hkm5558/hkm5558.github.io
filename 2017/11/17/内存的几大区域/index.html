@@ -79,22 +79,22 @@
 
 
 
-<meta name="description" content="内存的几大区域  1. 栈区(stack) 栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点时有限制，数据不灵活。［先进后出］  栈空间分静态分配 和动态分配两种。 静态分配是编译器完成的，比如自动变量(auto)的分配。动态分配由">
+<meta name="description" content="内存的几大区域1. 栈区(stack) 栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点时有限制，数据不灵活。［先进后出］  栈空间分静态分配 和动态分配两种。  静态分配是编译器完成的，比如自动变量(auto)的分配。动态分配由a">
 <meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="内存的几大区域">
 <meta property="og:url" content="http://yoursite.com/2017/11/17/内存的几大区域/index.html">
 <meta property="og:site_name" content="渐行渐远的博客">
-<meta property="og:description" content="内存的几大区域  1. 栈区(stack) 栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点时有限制，数据不灵活。［先进后出］  栈空间分静态分配 和动态分配两种。 静态分配是编译器完成的，比如自动变量(auto)的分配。动态分配由alloca函数完成。栈的动态分配无需释放(是自动的)，也就没有释放函数。为可移">
+<meta property="og:description" content="内存的几大区域1. 栈区(stack) 栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点时有限制，数据不灵活。［先进后出］  栈空间分静态分配 和动态分配两种。  静态分配是编译器完成的，比如自动变量(auto)的分配。动态分配由alloca函数完成。栈的动态分配无需释放(是自动的)，也就没有释放函数。为可移植">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2017/11/17/内存的几大区域/pic1.jpg">
 <meta property="og:image" content="http://yoursite.com/2017/11/17/内存的几大区域/pic2.jpg">
 <meta property="og:image" content="http://yoursite.com/2017/11/17/内存的几大区域/pic3.jpg">
 <meta property="og:image" content="http://yoursite.com/2017/11/17/内存的几大区域/pic4.png">
-<meta property="og:updated_time" content="2017-11-18T07:32:19.000Z">
+<meta property="og:updated_time" content="2017-11-18T07:39:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="内存的几大区域">
-<meta name="twitter:description" content="内存的几大区域  1. 栈区(stack) 栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点时有限制，数据不灵活。［先进后出］  栈空间分静态分配 和动态分配两种。 静态分配是编译器完成的，比如自动变量(auto)的分配。动态分配由alloca函数完成。栈的动态分配无需释放(是自动的)，也就没有释放函数。为可移">
+<meta name="twitter:description" content="内存的几大区域1. 栈区(stack) 栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点时有限制，数据不灵活。［先进后出］  栈空间分静态分配 和动态分配两种。  静态分配是编译器完成的，比如自动变量(auto)的分配。动态分配由alloca函数完成。栈的动态分配无需释放(是自动的)，也就没有释放函数。为可移植">
 <meta name="twitter:image" content="http://yoursite.com/2017/11/17/内存的几大区域/pic1.jpg">
 
 
@@ -305,12 +305,11 @@
       
 
       
-        <p>内存的几大区域</p>
-<hr>
-<h2 id="1-栈区-stack"><a href="#1-栈区-stack" class="headerlink" title="1. 栈区(stack)"></a>1. 栈区(stack)</h2><blockquote>
+        <h1 id="内存的几大区域"><a href="#内存的几大区域" class="headerlink" title="内存的几大区域"></a>内存的几大区域</h1><h2 id="1-栈区-stack"><a href="#1-栈区-stack" class="headerlink" title="1. 栈区(stack)"></a>1. 栈区(stack)</h2><blockquote>
 <p>栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点时有限制，数据不灵活。［先进后出］</p>
 </blockquote>
-<h5 id="栈空间分静态分配-和动态分配两种。"><a href="#栈空间分静态分配-和动态分配两种。" class="headerlink" title="栈空间分静态分配 和动态分配两种。"></a>栈空间分静态分配 和动态分配两种。</h5><blockquote>
+<p>栈空间分静态分配 和动态分配两种。</p>
+<blockquote>
 <p>静态分配是编译器完成的，比如自动变量(auto)的分配。<br>动态分配由alloca函数完成。<br>栈的动态分配无需释放(是自动的)，也就没有释放函数。<br>为可移植的程序起见，栈的动态分配操作是不被鼓励的。</p>
 </blockquote>
 <h2 id="2-堆区-heap"><a href="#2-堆区-heap" class="headerlink" title="2. 堆区(heap)"></a>2. 堆区(heap)</h2><blockquote>
@@ -333,7 +332,7 @@
 </blockquote>
 <img src="/2017/11/17/内存的几大区域/pic1.jpg" title="图片来源见水印">
 <img src="/2017/11/17/内存的几大区域/pic2.jpg" title="图片来源见水印">
-<h4 id="例子代码："><a href="#例子代码：" class="headerlink" title="例子代码："></a>例子代码：</h4><img src="/2017/11/17/内存的几大区域/pic3.jpg" title="图片来源见水印">
+<p>例子代码：<br><img src="/2017/11/17/内存的几大区域/pic3.jpg" title="图片来源见水印"></p>
 <h2 id="可能被追问的问题一："><a href="#可能被追问的问题一：" class="headerlink" title="可能被追问的问题一："></a>可能被追问的问题一：</h2><blockquote>
 <ul>
 <li><p>栈区 (stack [stæk]):<br>由编译器自动分配释放<br>局部变量是保存在栈区的<br>方法调用的实参也是保存在栈区的</p>
@@ -517,7 +516,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-栈区-stack"><span class="nav-text">1. 栈区(stack)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#栈空间分静态分配-和动态分配两种。"><span class="nav-text">栈空间分静态分配 和动态分配两种。</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-堆区-heap"><span class="nav-text">2. 堆区(heap)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-全局区-静态区-static"><span class="nav-text">3. 全局区(静态区) (static)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-文字常量区"><span class="nav-text">4. 文字常量区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-代码区"><span class="nav-text">5. 代码区</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#例子代码："><span class="nav-text">例子代码：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可能被追问的问题一："><span class="nav-text">可能被追问的问题一：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可能被追问的问题二："><span class="nav-text">可能被追问的问题二：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可能被追问的问题三："><span class="nav-text">可能被追问的问题三：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内存的几大区域"><span class="nav-text">内存的几大区域</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-栈区-stack"><span class="nav-text">1. 栈区(stack)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-堆区-heap"><span class="nav-text">2. 堆区(heap)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-全局区-静态区-static"><span class="nav-text">3. 全局区(静态区) (static)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-文字常量区"><span class="nav-text">4. 文字常量区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-代码区"><span class="nav-text">5. 代码区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可能被追问的问题一："><span class="nav-text">可能被追问的问题一：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可能被追问的问题二："><span class="nav-text">可能被追问的问题二：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可能被追问的问题三："><span class="nav-text">可能被追问的问题三：</span></a></li></ol></li></ol></div>
             
 
           </div>
