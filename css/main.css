@@ -1746,8 +1746,8 @@ pre .javascript .function {
   animation: cycle 2s 0.5s forwards;
   transition: border-radius 2s;
   border-radius: 100%;
-  padding: 2px;
-  border: 2px dashed #fff;
+  padding: 10px;
+  border: 10px dashed #fff;
 /* 设置循环动画 [animation: (play)动画名称 (2s)动画播放时长单位秒或微秒 (ase-out)动画播放的速度曲线为以低速结束 
     (1s)等待1秒然后开始动画 (1)动画播放次数(infinite为循环播放) ]*/
 /* 鼠标经过头像旋转360度 */
@@ -1928,7 +1928,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ff4beb;
+  background: #542086;
 }
 .links-of-blogroll {
   font-size: 13px;
