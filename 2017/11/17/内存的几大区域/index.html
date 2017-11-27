@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="iOS," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. 栈区(stack) 栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点时有限制，数据不灵活。［先进后出］  栈空间分静态分配 和动态分配两种。  静态分配是编译器完成的，比如自动变量(auto)的分配。动态分配由alloca函数">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内存的几大区域">
+<meta property="og:url" content="http://yoursite.com/2017/11/17/内存的几大区域/index.html">
+<meta property="og:site_name" content="渐行渐远的博客">
+<meta property="og:description" content="1. 栈区(stack) 栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点时有限制，数据不灵活。［先进后出］  栈空间分静态分配 和动态分配两种。  静态分配是编译器完成的，比如自动变量(auto)的分配。动态分配由alloca函数完成。栈的动态分配无需释放(是自动的)，也就没有释放函数。为可移植的程序起见，栈">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2017/11/17/内存的几大区域/pic1.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/11/17/内存的几大区域/pic2.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/11/17/内存的几大区域/pic3.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/11/17/内存的几大区域/pic4.png">
+<meta property="og:updated_time" content="2017-11-18T09:21:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="内存的几大区域">
+<meta name="twitter:description" content="1. 栈区(stack) 栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点时有限制，数据不灵活。［先进后出］  栈空间分静态分配 和动态分配两种。  静态分配是编译器完成的，比如自动变量(auto)的分配。动态分配由alloca函数完成。栈的动态分配无需释放(是自动的)，也就没有释放函数。为可移植的程序起见，栈">
+<meta name="twitter:image" content="http://yoursite.com/2017/11/17/内存的几大区域/pic1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/17/内存的几大区域/"/>
+
+
+
+
+
+  <title>内存的几大区域 | 渐行渐远的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">渐行渐远的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Coding for fun</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/17/内存的几大区域/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="渐行渐远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="渐行渐远的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">内存的几大区域</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-17T17:51:33+08:00">
+                2017-11-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Interview-Questions/" itemprop="url" rel="index">
+                    <span itemprop="name">Interview Questions</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-栈区-stack"><a href="#1-栈区-stack" class="headerlink" title="1. 栈区(stack)"></a>1. 栈区(stack)</h2><blockquote>
+<p>栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点时有限制，数据不灵活。［先进后出］</p>
+</blockquote>
+<p>栈空间分静态分配 和动态分配两种。</p>
+<blockquote>
+<p>静态分配是编译器完成的，比如自动变量(auto)的分配。<br>动态分配由alloca函数完成。<br>栈的动态分配无需释放(是自动的)，也就没有释放函数。<br>为可移植的程序起见，栈的动态分配操作是不被鼓励的。</p>
+</blockquote>
+<h2 id="2-堆区-heap"><a href="#2-堆区-heap" class="headerlink" title="2. 堆区(heap)"></a>2. 堆区(heap)</h2><blockquote>
+<p>堆区(heap) 由程序员分配和释放，如果程序员不释放，程序结束时，可能会由操作系统回收 ，比如在ios 中 alloc 都是存放在堆中。   </p>
+</blockquote>
+<p>优点是灵活方便，数据适应面广泛，但是效率有一定降低。</p>
+<blockquote>
+<p>堆是函数库内部数据结构，不一定唯一。<br>不同堆分配的内存无法互相操作。<br>堆的分配总是动态的。</p>
+</blockquote>
+<p>虽然程序结束时所有的数据空间都会被释放回系统，但是精确的申请内存，释放内存匹配是良好程序的基本要素。</p>
+<h2 id="3-全局区-静态区-static"><a href="#3-全局区-静态区-static" class="headerlink" title="3. 全局区(静态区) (static)"></a>3. 全局区(静态区) (static)</h2><blockquote>
+<p>全局区(静态区) (static) 全局变量和静态变量的存储是放在一起的，初始化的全局变量和静态变量存放在一块区域，未初始化的全局变量和静态变量在相邻的另一块区域，程序结束后有系统释放。</p>
+<p>注意：全局区又可分为<strong>未初始化全局区</strong>(bss段)和<strong>初始化全局区</strong>(data段)<br> 举例:<br> <code>int a; 未初始化的</code>  <code>int a = 10; 初始化的</code></p>
+</blockquote>
+<h2 id="4-文字常量区"><a href="#4-文字常量区" class="headerlink" title="4. 文字常量区"></a>4. 文字常量区</h2><blockquote>
+<p>文字常量区 存放常量字符串，程序结束后由系统释放；</p>
+</blockquote>
+<h2 id="5-代码区"><a href="#5-代码区" class="headerlink" title="5. 代码区"></a>5. 代码区</h2><blockquote>
+<p>代码区 存放函数的二进制代码</p>
+</blockquote>
+<img src="/2017/11/17/内存的几大区域/pic1.jpg" title="图片来源见水印">
+<img src="/2017/11/17/内存的几大区域/pic2.jpg" title="图片来源见水印">
+<p>例子代码：<br><img src="/2017/11/17/内存的几大区域/pic3.jpg" title="图片来源见水印"></p>
+<h2 id="可能被追问的问题一："><a href="#可能被追问的问题一：" class="headerlink" title="可能被追问的问题一："></a>可能被追问的问题一：</h2><blockquote>
+<ul>
+<li><p>栈区 (stack [stæk]):<br>由编译器自动分配释放<br>局部变量是保存在栈区的<br>方法调用的实参也是保存在栈区的</p>
+</li>
+<li><p>堆区 (heap [hiːp]):<br>由程序员分配释放，若程序员不释放，会出现内存泄漏，赋值语句右侧 使用 new 方法创建的对象，被创建对象的所有 成员变量！</p>
+</li>
+<li><p>BSS 段 :<br>程序结束后由系统释放</p>
+</li>
+<li><p>数据段 :<br>程序结束后由系统释放</p>
+</li>
+<li><p>代码段:<br>程序结束后由系统释放<br>程序编译链接 后的二进制可执行代码</p>
+</li>
+</ul>
+</blockquote>
+<h2 id="可能被追问的问题二："><a href="#可能被追问的问题二：" class="headerlink" title="可能被追问的问题二："></a>可能被追问的问题二：</h2><blockquote>
+<ul>
+<li>申请后的系统是如何响应的？<blockquote>
+<p>栈：存储每一个函数在执行的时候都会向操作系统索要资源，栈区就是函数运行时的内存，栈区中的变量由编译器负责分配和释放，内存随着函数的运行分配，随着函数的结束而释放，由系统自动完成。</p>
+<p>注意：只要栈的剩余空间大于所申请空间，系统将为程序提供内存，否则将报异常提示栈溢出。  </p>
+<p>堆：<br>1.首先应该知道操作系统有一个记录空闲内存地址的链表。<br>2.当系统收到程序的申请时，会遍历该链表，寻找第一个空间大于所申请空间的堆结点，然后将该结点从空闲结点链表中删除，并将该结点的空间分配给程序。<br>3 .由于找到的堆结点的大小不一定正好等于申请的大小，系统会自动的将多余的那部分重新放入空闲链表中</p>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+<h2 id="可能被追问的问题三："><a href="#可能被追问的问题三：" class="headerlink" title="可能被追问的问题三："></a>可能被追问的问题三：</h2><blockquote>
+<ul>
+<li>申请大小的限制是怎样的？<blockquote>
+<p>栈：栈是向低地址扩展的数据结构，是一块连续的内存的区域。<br>是栈顶的地址和栈的最大容量是系统预先规定好的，栈的大小是2M（也有的说是1M，总之是一个编译时就确定的常数 ) ,如果申请的空间超过栈的剩余空间时，将提示overflow。<br>因此，能从栈获得的空间较小。</p>
+<p>堆：堆是向高地址扩展的数据结构，是不连续的内存区域。<br>这是由于系统是用链表来存储的空闲内存地址的，自然是不连续的，而链表的遍历方向是由低地址向高地址。<br>堆的大小受限于计算机系统中有效的虚拟内存。<br>由此可见，堆获得的空间比较灵活，也比较大。</p>
+<img src="/2017/11/17/内存的几大区域/pic4.png" title="图片来源见水印">
+<p> 栈：<br> 由系统自动分配，速度较快，不会产生内存碎片  </p>
+<p> 堆：是由alloc分配的内存，速度比较慢，而且容易产生内存碎片，不过用起来最方便<br> 打个比喻来说：<br> 使用栈就象我们去饭馆里吃饭，只管点菜（发出申请）、付钱、和吃（使用），吃饱了就走，不必理会切菜、洗菜等准备工作和洗碗、刷锅等扫尾工作，他的好处是快捷，但是自由度小。<br> 使用堆就象是自己动手做喜欢吃的菜肴，比较麻烦，但是比较符合自己的口味，而且自由度大。</p>
+</blockquote>
+</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+    
+    <div>
+      
+        
+<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------本文结束<i class="fa fa-paw"></i>感谢阅读------</div>
+    
+</div>
+
+
+      
+    </div>		
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"><i class="fa fa-tag"></i> iOS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpeg"
+                alt="渐行渐远" />
+            
+              <p class="site-author-name" itemprop="name">渐行渐远</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-栈区-stack"><span class="nav-text">1. 栈区(stack)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-堆区-heap"><span class="nav-text">2. 堆区(heap)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-全局区-静态区-static"><span class="nav-text">3. 全局区(静态区) (static)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-文字常量区"><span class="nav-text">4. 文字常量区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-代码区"><span class="nav-text">5. 代码区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可能被追问的问题一："><span class="nav-text">可能被追问的问题一：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可能被追问的问题二："><span class="nav-text">可能被追问的问题二：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可能被追问的问题三："><span class="nav-text">可能被追问的问题三：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">渐行渐远</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
