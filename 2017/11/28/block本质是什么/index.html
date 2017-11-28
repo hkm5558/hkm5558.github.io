@@ -86,19 +86,19 @@
 
 
 
-<meta name="description" content="底层实现      block是一个指针结构体，在终端下通过clang -rewrite-objc 指令查看C++代码。首先创建一个OS X 工程，写一个最简单的block利用终端编译生成C++代码clang -rewrite-objc main.m  其中几个重要的结构体和函数简介：__block_impl：这是一个">
+<meta name="description" content="- 底层实现    block是一个指针结构体，在终端下通过clang -rewrite-objc 指令查看C++代码。首先创建一个OS X 工程，写一个最简单的block利用终端编译生成C++代码clang -rewrite-objc main.m  其中几个重要的结构体和函数简介：__block_impl：这是一个">
 <meta name="keywords" content="iOS,Block">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Block本质是什么">
 <meta property="og:url" content="https://hkm5558.github.io/2017/11/28/block本质是什么/index.html">
 <meta property="og:site_name" content="渐行渐远的博客">
-<meta property="og:description" content="底层实现      block是一个指针结构体，在终端下通过clang -rewrite-objc 指令查看C++代码。首先创建一个OS X 工程，写一个最简单的block利用终端编译生成C++代码clang -rewrite-objc main.m  其中几个重要的结构体和函数简介：__block_impl：这是一个结构体，也是C面向对象的体现，可以理解为block的基类;__main_blo">
+<meta property="og:description" content="- 底层实现    block是一个指针结构体，在终端下通过clang -rewrite-objc 指令查看C++代码。首先创建一个OS X 工程，写一个最简单的block利用终端编译生成C++代码clang -rewrite-objc main.m  其中几个重要的结构体和函数简介：__block_impl：这是一个结构体，也是C面向对象的体现，可以理解为block的基类;__main_blo">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://hkm5558.github.io/2017/11/28/block本质是什么/pic1.jpeg">
-<meta property="og:updated_time" content="2017-11-28T10:04:03.000Z">
+<meta property="og:updated_time" content="2017-11-28T10:08:58.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Block本质是什么">
-<meta name="twitter:description" content="底层实现      block是一个指针结构体，在终端下通过clang -rewrite-objc 指令查看C++代码。首先创建一个OS X 工程，写一个最简单的block利用终端编译生成C++代码clang -rewrite-objc main.m  其中几个重要的结构体和函数简介：__block_impl：这是一个结构体，也是C面向对象的体现，可以理解为block的基类;__main_blo">
+<meta name="twitter:description" content="- 底层实现    block是一个指针结构体，在终端下通过clang -rewrite-objc 指令查看C++代码。首先创建一个OS X 工程，写一个最简单的block利用终端编译生成C++代码clang -rewrite-objc main.m  其中几个重要的结构体和函数简介：__block_impl：这是一个结构体，也是C面向对象的体现，可以理解为block的基类;__main_blo">
 <meta name="twitter:image" content="https://hkm5558.github.io/2017/11/28/block本质是什么/pic1.jpeg">
 
 
@@ -425,29 +425,28 @@
       
 
       
-        <ul>
-<li>底层实现  </li>
-</ul>
-<blockquote>
+        <h2 id="底层实现"><a href="#底层实现" class="headerlink" title=" - 底层实现  "></a> - 底层实现  </h2><blockquote>
 <p> block是一个指针结构体，在终端下通过clang -rewrite-objc 指令查看C++代码。<br>首先创建一个OS X 工程，写一个最简单的block<br>利用终端编译生成C++代码<br><img src="/2017/11/28/block本质是什么/pic1.jpeg" title="图片来源见水印"><br>clang -rewrite-objc main.m</p>
 <blockquote>
 <p>其中几个重要的结构体和函数简介：<br><strong>__block_impl</strong>：这是一个结构体，也是C面向对象的体现，可以理解为block的基类;<br><strong>__main_block_impl_0</strong>: 可以理解为block变量;<br><strong>__main_block_func_0</strong>: 可以理解为匿名函数;<br><strong>__main_block_desc_0</strong>:block的描述, Block_size;  </p>
-<p>1、<strong>block_implstruct </strong>block_impl { void <em>isa; int Flags; int Reserved; void </em>FuncPtr;};</p>
-<p>2、<strong>main_block_impl_0struct </strong>main_block_impl_0 { struct <strong>block_impl impl; struct </strong>main_block_desc_0<em> Desc; __main_block_impl_0(void </em>fp,<br>struct __main_block_desc_0 *desc, int flags=0) {  impl.isa = &amp;_NSConcreteStackBlock; impl.Flags = flags;  impl.FuncPtr = fp; Desc = desc; }};</p>
-<p>3、<strong>main_block_func_0static void </strong>main_block_func_0<br>(struct <strong>main_block_impl_0 *</strong>cself) { NSLog((NSString *)&amp;<strong>NSConstantStringImpl</strong>var_folders<em>gc</em><br>5fkhcz0n6px48vzc744hmp6c0000gn_T_main_eef954_mi_0);</p>
-<p>4、 <strong>main_block_desc_0staticstruct </strong>main_block_desc_0 { size_t reserved; size_t Block_size;} <strong>main_block_desc_0_DATA =<br>{ 0, sizeof(struct </strong>main_block_impl_0)};int main(int argc, const char <em> argv[]) {/</em> @autoreleasepool <em>/<br>{ <strong>AtAutoreleasePool </strong>autoreleasepool; void (</em>myblock)() = ((void (<em>)<br>())&amp;__main_block_impl_0((void </em>)<strong>main_block_func_0,<br>&amp;</strong>main_block_desc_0_DATA)); ((void (<em>)(__block_impl </em>))<br>((<strong>block_impl *)myblock)-&gt;FuncPtr)((</strong>block_impl *)myblock); } return 0;}  </p>
+<p>1、<br><code>__block_implstruct __block_impl { void *isa; int Flags; int Reserved; void *FuncPtr;};</code></p>
+<p>2、<br><code>__main_block_impl_0struct __main_block_impl_0 { struct __block_impl impl; struct __main_block_desc_0* Desc; __main_block_impl_0(void *fp,
+            struct __main_block_desc_0 *desc, int flags=0) {  impl.isa = &amp;_NSConcreteStackBlock; impl.Flags = flags;  impl.FuncPtr = fp; Desc = desc; }};</code></p>
+<p>3、<br><code>__main_block_func_0static void __main_block_func_0
+(struct __main_block_impl_0 *__cself) { NSLog((NSString *)&amp;__NSConstantStringImpl__var_folders_gc_
+5fkhcz0n6px48vzc744hmp6c0000gn_T_main_eef954_mi_0);</code></p>
+<p>4、<br><code>__main_block_desc_0staticstruct __main_block_desc_0 { size_t reserved; size_t Block_size;} __main_block_desc_0_DATA =
+{ 0, sizeof(struct __main_block_impl_0)};int main(int argc, const char * argv[]) {/* @autoreleasepool */
+{ __AtAutoreleasePool __autoreleasepool; void (*myblock)() = ((void (*)
+())&amp;__main_block_impl_0((void *)__main_block_func_0,
+&amp;__main_block_desc_0_DATA)); ((void (*)(__block_impl *))
+((__block_impl *)myblock)-&gt;FuncPtr)((__block_impl *)myblock); } return 0;}</code>  </p>
 </blockquote>
 </blockquote>
-<ul>
-<li>注意事项</li>
-</ul>
-<blockquote>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title=" - 注意事项"></a> - 注意事项</h2><blockquote>
 <p>block容易造成循环引用，在block里面如果使用了self，然后形成强引用时，需要打断循环引用<br>在MRC下用_block，在ARC下使用__weak;</p>
 </blockquote>
-<ul>
-<li>关于Block在内存中的位置</li>
-</ul>
-<blockquote>
+<h2 id="关于Block在内存中的位置"><a href="#关于Block在内存中的位置" class="headerlink" title=" - 关于Block在内存中的位置"></a> - 关于Block在内存中的位置</h2><blockquote>
 <p>block块的存储位置（block入口的地址）可能存放在3个地方：代码区（全局区）、堆区、栈区（ARC情况下回自动拷贝到堆区，因此ARC下只有两个地方：代码区和堆区）。</p>
 <ul>
 <li><p>代码区：<br> 不访问栈区的变量（如局部变量），且不访问堆区的变量（如用alloc创建的对象）时，此时block存放在代码区；</p>
@@ -585,8 +584,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -664,6 +672,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#底层实现"><span class="nav-text"> - 底层实现  </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-text"> - 注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于Block在内存中的位置"><span class="nav-text"> - 关于Block在内存中的位置</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
