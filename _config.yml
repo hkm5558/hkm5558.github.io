@@ -81,3 +81,11 @@ deploy:
   type: git
   repository: https://github.com/hkm5558/hkm5558.github.io.git
   branch: master
+
+# algolia 搜索
+algolia:
+  applicationID: '9S64QK8IQV'
+  apiKey: 'cfec0965d458c2c339c680fdb118ecc2'
+  adminApiKey: 'cc11ce80019c9382bf00b9da4664a764'
+  indexName: ‘hexo_name’
+  chunkSize: 5000
