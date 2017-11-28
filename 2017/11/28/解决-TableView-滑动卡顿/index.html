@@ -86,18 +86,18 @@
 
 
 
-<meta name="description" content="最常用的就是cell的重用， 注册重用标识符  如果不重用cell时，每当一个cell显示到屏幕上时，就会重新创建一个新的cell 如果有很多数据的时候，就会堆积很多cell。如果重用cell，为cell创建一个ID 每当需要显示cell 的时候，都会先去缓冲池中寻找可循环利用的cell，如果没有再重新创建cell  ">
+<meta name="description" content="1. 最常用的就是cell的重用， 注册重用标识符 如果不重用cell时，每当一个cell显示到屏幕上时，就会重新创建一个新的cell 如果有很多数据的时候，就会堆积很多cell。如果重用cell，为cell创建一个ID 每当需要显示cell 的时候，都会先去缓冲池中寻找可循环利用的cell，如果没有再重新创建cell">
 <meta name="keywords" content="iOS,TableView,优化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="解决 TableView 滑动卡顿">
 <meta property="og:url" content="https://hkm5558.github.io/2017/11/28/解决-TableView-滑动卡顿/index.html">
 <meta property="og:site_name" content="渐行渐远的博客">
-<meta property="og:description" content="最常用的就是cell的重用， 注册重用标识符  如果不重用cell时，每当一个cell显示到屏幕上时，就会重新创建一个新的cell 如果有很多数据的时候，就会堆积很多cell。如果重用cell，为cell创建一个ID 每当需要显示cell 的时候，都会先去缓冲池中寻找可循环利用的cell，如果没有再重新创建cell   避免cell的重新布局  cell的布局填充等操作 比较耗时，一般创建时就布">
+<meta property="og:description" content="1. 最常用的就是cell的重用， 注册重用标识符 如果不重用cell时，每当一个cell显示到屏幕上时，就会重新创建一个新的cell 如果有很多数据的时候，就会堆积很多cell。如果重用cell，为cell创建一个ID 每当需要显示cell 的时候，都会先去缓冲池中寻找可循环利用的cell，如果没有再重新创建cell   2. 避免cell的重新布局 cell的布局填充等操作 比较耗时，一般创">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-28T09:32:42.000Z">
+<meta property="og:updated_time" content="2017-11-28T09:36:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="解决 TableView 滑动卡顿">
-<meta name="twitter:description" content="最常用的就是cell的重用， 注册重用标识符  如果不重用cell时，每当一个cell显示到屏幕上时，就会重新创建一个新的cell 如果有很多数据的时候，就会堆积很多cell。如果重用cell，为cell创建一个ID 每当需要显示cell 的时候，都会先去缓冲池中寻找可循环利用的cell，如果没有再重新创建cell   避免cell的重新布局  cell的布局填充等操作 比较耗时，一般创建时就布">
+<meta name="twitter:description" content="1. 最常用的就是cell的重用， 注册重用标识符 如果不重用cell时，每当一个cell显示到屏幕上时，就会重新创建一个新的cell 如果有很多数据的时候，就会堆积很多cell。如果重用cell，为cell创建一个ID 每当需要显示cell 的时候，都会先去缓冲池中寻找可循环利用的cell，如果没有再重新创建cell   2. 避免cell的重新布局 cell的布局填充等操作 比较耗时，一般创">
 
 
 
@@ -423,57 +423,33 @@
       
 
       
-        <ol>
-<li><p><strong>最常用的就是cell的重用， 注册重用标识符</strong></p>
-<blockquote>
+        <h2 id="1-最常用的就是cell的重用，-注册重用标识符"><a href="#1-最常用的就是cell的重用，-注册重用标识符" class="headerlink" title=" 1. 最常用的就是cell的重用， 注册重用标识符"></a> 1. <strong>最常用的就是cell的重用， 注册重用标识符</strong></h2><blockquote>
 <p>如果不重用cell时，每当一个cell显示到屏幕上时，就会重新创建一个新的cell</p>
 <p>如果有很多数据的时候，就会堆积很多cell。如果重用cell，为cell创建一个ID</p>
 <p>每当需要显示cell 的时候，都会先去缓冲池中寻找可循环利用的cell，如果没有再重新创建cell</p>
 </blockquote>
-</li>
-<li><p><strong>避免cell的重新布局</strong></p>
-<blockquote>
+<h2 id="2-避免cell的重新布局"><a href="#2-避免cell的重新布局" class="headerlink" title=" 2. 避免cell的重新布局"></a> 2. <strong>避免cell的重新布局</strong></h2><blockquote>
 <p>cell的布局填充等操作 比较耗时，一般创建时就布局好<br>可以将cell单独放到一个自定义类，在初始化时就布局好</p>
 </blockquote>
-</li>
-<li><p><strong>提前计算并缓存cell的属性及内容</strong></p>
-<blockquote>
+<h2 id="3-提前计算并缓存cell的属性及内容"><a href="#3-提前计算并缓存cell的属性及内容" class="headerlink" title=" 3. 提前计算并缓存cell的属性及内容"></a> 3. <strong>提前计算并缓存cell的属性及内容</strong></h2><blockquote>
 <p>当我们创建cell的数据源方法时，编译器并不是先创建cell 再确定cell的高度<br>而是先根据内容一次确定每一个cell的高度，高度确定后，再创建要显示的cell，滚动时，每当cell进入凭虚都会计算高度，提前估算高度告诉编译器，编译器知道高度后，紧接着就会创建cell，这时再调用高度的具体计算方法，这样可以方式浪费时间去计算显示以外的cell</p>
 </blockquote>
-</li>
-<li><p><strong>减少cell中控件的数量</strong></p>
-<blockquote>
+<h2 id="4-减少cell中控件的数量"><a href="#4-减少cell中控件的数量" class="headerlink" title=" 4. 减少cell中控件的数量"></a> 4. <strong>减少cell中控件的数量</strong></h2><blockquote>
 <p>尽量使cell得布局大致相同，不同风格的cell可以使用不用的重用标识符，初始化时添加控件，不使用的可以先隐藏</p>
 </blockquote>
-</li>
-<li><p><strong>不要使用ClearColor，无背景色，透明度也不要设置为0</strong></p>
-<blockquote>
+<h2 id="5-不要使用ClearColor，无背景色，透明度也不要设置为0"><a href="#5-不要使用ClearColor，无背景色，透明度也不要设置为0" class="headerlink" title=" 5. 不要使用ClearColor，无背景色，透明度也不要设置为0"></a> 5. <strong>不要使用ClearColor，无背景色，透明度也不要设置为0</strong></h2><blockquote>
 <p>因为这样渲染耗时比较长</p>
 </blockquote>
-</li>
-<li><p><strong>使用局部更新</strong></p>
-<blockquote>
+<h2 id="6-使用局部更新"><a href="#6-使用局部更新" class="headerlink" title=" 6. 使用局部更新"></a> 6. <strong>使用局部更新</strong></h2><blockquote>
 <p>如果只是更新某组的话，使用reloadSection进行局部更新</p>
 </blockquote>
-</li>
-<li><p><strong>加载网络数据，下载图片，使用异步加载，并对图片进行缓存</strong></p>
-</li>
-<li><p><strong>尽量避免addView 给cell动态添加view</strong></p>
-<blockquote>
+<h2 id="7-加载网络数据，下载图片，使用异步加载，并对图片进行缓存"><a href="#7-加载网络数据，下载图片，使用异步加载，并对图片进行缓存" class="headerlink" title=" 7. 加载网络数据，下载图片，使用异步加载，并对图片进行缓存"></a> 7. <strong>加载网络数据，下载图片，使用异步加载，并对图片进行缓存</strong></h2><h2 id="8-尽量避免addView-给cell动态添加view"><a href="#8-尽量避免addView-给cell动态添加view" class="headerlink" title=" 8. 尽量避免addView 给cell动态添加view"></a> 8. <strong>尽量避免addView 给cell动态添加view</strong></h2><blockquote>
 <p>避免过多的消耗性能</p>
 </blockquote>
-</li>
-<li><p><strong>按需加载cell，cell滚动很快时，只加载范围内的cell</strong></p>
-</li>
-<li><p><strong>不要实现无用的代理方法，tableView只遵守两个协议</strong></p>
-</li>
-<li><p><strong>缓存行高</strong></p>
-<blockquote>
+<h2 id="9-按需加载cell，cell滚动很快时，只加载范围内的cell"><a href="#9-按需加载cell，cell滚动很快时，只加载范围内的cell" class="headerlink" title=" 9. 按需加载cell，cell滚动很快时，只加载范围内的cell"></a> 9. <strong>按需加载cell，cell滚动很快时，只加载范围内的cell</strong></h2><h2 id="10-不要实现无用的代理方法，tableView只遵守两个协议"><a href="#10-不要实现无用的代理方法，tableView只遵守两个协议" class="headerlink" title=" 10. 不要实现无用的代理方法，tableView只遵守两个协议"></a> 10. <strong>不要实现无用的代理方法，tableView只遵守两个协议</strong></h2><h2 id="11-缓存行高"><a href="#11-缓存行高" class="headerlink" title=" 11. 缓存行高"></a> 11. <strong>缓存行高</strong></h2><blockquote>
 <p>estimatedHeightForRow不能和HeightForRow里面的layoutIfNeed同时存在，这两者同时存在才会出现“窜动”的bug。所以我的建议是：只要是固定行高就写预估行高来减少行高调用次数提升性能。如果是动态行高就不要写预估方法了，用一个行高的缓存字典来减少代码的调用次数即可</p>
 </blockquote>
-</li>
-</ol>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><blockquote>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a><strong>小结</strong></h2><blockquote>
 <p>有了上面的方法，我们在优化tableView的时候就能很好解决卡顿的问题了。<br>在iOS应用中，UITableView应该是使用率最高的视图之一了。<br>iPod、时钟、日历、备忘录、Mail、天气、照片、电话、短信、<br>Safari、App Store、iTunes、Game Center…几乎所有自带的应用中都能看到它的身影，可见它的重要性。<br>然而在使用第三方应用时，却经常遇到性能上的问题，普遍表现在滚动时比较卡，特别是table cell中包含图片的情况时。<br>实际上只要针对性地优化一下，这种问题就不会有了。有兴趣的可以看看 LazyTableImages这个官方的例子程序，虽然也要从网上下载图片并显示，但滚动时丝毫不卡。</p>
 </blockquote>
 
@@ -702,7 +678,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-text">小结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-最常用的就是cell的重用，-注册重用标识符"><span class="nav-text"> 1. 最常用的就是cell的重用， 注册重用标识符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-避免cell的重新布局"><span class="nav-text"> 2. 避免cell的重新布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-提前计算并缓存cell的属性及内容"><span class="nav-text"> 3. 提前计算并缓存cell的属性及内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-减少cell中控件的数量"><span class="nav-text"> 4. 减少cell中控件的数量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-不要使用ClearColor，无背景色，透明度也不要设置为0"><span class="nav-text"> 5. 不要使用ClearColor，无背景色，透明度也不要设置为0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-使用局部更新"><span class="nav-text"> 6. 使用局部更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-加载网络数据，下载图片，使用异步加载，并对图片进行缓存"><span class="nav-text"> 7. 加载网络数据，下载图片，使用异步加载，并对图片进行缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-尽量避免addView-给cell动态添加view"><span class="nav-text"> 8. 尽量避免addView 给cell动态添加view</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-按需加载cell，cell滚动很快时，只加载范围内的cell"><span class="nav-text"> 9. 按需加载cell，cell滚动很快时，只加载范围内的cell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-不要实现无用的代理方法，tableView只遵守两个协议"><span class="nav-text"> 10. 不要实现无用的代理方法，tableView只遵守两个协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-缓存行高"><span class="nav-text"> 11. 缓存行高</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-text">小结</span></a></li></ol></div>
             
 
           </div>
