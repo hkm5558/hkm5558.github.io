@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="iOS,Block," />
 
 
 
@@ -86,16 +86,20 @@
 
 
 
-<meta name="description" content="Coding for fun">
-<meta property="og:type" content="website">
-<meta property="og:title" content="渐行渐远的博客">
-<meta property="og:url" content="https://hkm5558.github.io/categories/Question/index.html">
+<meta name="description" content="底层实现      block是一个指针结构体，在终端下通过clang -rewrite-objc 指令查看C++代码。首先创建一个OS X 工程，写一个最简单的block利用终端编译生成C++代码clang -rewrite-objc main.m  其中几个重要的结构体和函数简介：__block_impl：这是一个">
+<meta name="keywords" content="iOS,Block">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Block本质是什么">
+<meta property="og:url" content="https://hkm5558.github.io/2017/11/28/block本质是什么/index.html">
 <meta property="og:site_name" content="渐行渐远的博客">
-<meta property="og:description" content="Coding for fun">
+<meta property="og:description" content="底层实现      block是一个指针结构体，在终端下通过clang -rewrite-objc 指令查看C++代码。首先创建一个OS X 工程，写一个最简单的block利用终端编译生成C++代码clang -rewrite-objc main.m  其中几个重要的结构体和函数简介：__block_impl：这是一个结构体，也是C面向对象的体现，可以理解为block的基类;__main_blo">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://hkm5558.github.io/2017/11/28/block本质是什么/pic1.jpeg">
+<meta property="og:updated_time" content="2017-11-28T10:04:03.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="渐行渐远的博客">
-<meta name="twitter:description" content="Coding for fun">
+<meta name="twitter:title" content="Block本质是什么">
+<meta name="twitter:description" content="底层实现      block是一个指针结构体，在终端下通过clang -rewrite-objc 指令查看C++代码。首先创建一个OS X 工程，写一个最简单的block利用终端编译生成C++代码clang -rewrite-objc main.m  其中几个重要的结构体和函数简介：__block_impl：这是一个结构体，也是C面向对象的体现，可以理解为block的基类;__main_blo">
+<meta name="twitter:image" content="https://hkm5558.github.io/2017/11/28/block本质是什么/pic1.jpeg">
 
 
 
@@ -125,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="https://hkm5558.github.io/categories/Question/"/>
+  <link rel="canonical" href="https://hkm5558.github.io/2017/11/28/block本质是什么/"/>
 
 
 
 
 
-  <title>分类: Question | 渐行渐远的博客</title>
+  <title>Block本质是什么 | 渐行渐远的博客</title>
   
 
 
@@ -150,7 +154,7 @@
     
   
 
-  <div class="container sidebar-position-right ">
+  <div class="container sidebar-position-right page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -282,139 +286,271 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block category">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>Question<small>分类</small>
-        </h2>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hkm5558.github.io/2017/11/28/block本质是什么/">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="渐行渐远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="渐行渐远的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2017/11/28/block本质是什么/" itemprop="url">
-              
-                <span itemprop="name">Block本质是什么</span>
-              
-            </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">Block本质是什么</h2>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-28T17:40:16+08:00"
-              content="2017-11-28" >
-          11-28
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-28T17:40:16+08:00">
+                2017-11-28
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Question/" itemprop="url" rel="index">
+                    <span itemprop="name">Question</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  650 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/28/解决-TableView-滑动卡顿/" itemprop="url">
-              
-                <span itemprop="name">解决 TableView 滑动卡顿</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-28T17:14:27+08:00"
-              content="2017-11-28" >
-          11-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/28/如何分析App内存/" itemprop="url">
-              
-                <span itemprop="name">如何分析App内存</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-28T16:33:39+08:00"
-              content="2017-11-28" >
-          11-28
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/17/内存的几大区域/" itemprop="url">
-              
-                <span itemprop="name">内存的几大区域</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-11-17T17:51:33+08:00"
-              content="2017-11-17" >
-          11-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <ul>
+<li>底层实现  </li>
+</ul>
+<blockquote>
+<p> block是一个指针结构体，在终端下通过clang -rewrite-objc 指令查看C++代码。<br>首先创建一个OS X 工程，写一个最简单的block<br>利用终端编译生成C++代码<br><img src="/2017/11/28/block本质是什么/pic1.jpeg" title="图片来源见水印"><br>clang -rewrite-objc main.m</p>
+<blockquote>
+<p>其中几个重要的结构体和函数简介：<br><strong>__block_impl</strong>：这是一个结构体，也是C面向对象的体现，可以理解为block的基类;<br><strong>__main_block_impl_0</strong>: 可以理解为block变量;<br><strong>__main_block_func_0</strong>: 可以理解为匿名函数;<br><strong>__main_block_desc_0</strong>:block的描述, Block_size;  </p>
+<p>1、<strong>block_implstruct </strong>block_impl { void <em>isa; int Flags; int Reserved; void </em>FuncPtr;};</p>
+<p>2、<strong>main_block_impl_0struct </strong>main_block_impl_0 { struct <strong>block_impl impl; struct </strong>main_block_desc_0<em> Desc; __main_block_impl_0(void </em>fp,<br>struct __main_block_desc_0 *desc, int flags=0) {  impl.isa = &amp;_NSConcreteStackBlock; impl.Flags = flags;  impl.FuncPtr = fp; Desc = desc; }};</p>
+<p>3、<strong>main_block_func_0static void </strong>main_block_func_0<br>(struct <strong>main_block_impl_0 *</strong>cself) { NSLog((NSString *)&amp;<strong>NSConstantStringImpl</strong>var_folders<em>gc</em><br>5fkhcz0n6px48vzc744hmp6c0000gn_T_main_eef954_mi_0);</p>
+<p>4、 <strong>main_block_desc_0staticstruct </strong>main_block_desc_0 { size_t reserved; size_t Block_size;} <strong>main_block_desc_0_DATA =<br>{ 0, sizeof(struct </strong>main_block_impl_0)};int main(int argc, const char <em> argv[]) {/</em> @autoreleasepool <em>/<br>{ <strong>AtAutoreleasePool </strong>autoreleasepool; void (</em>myblock)() = ((void (<em>)<br>())&amp;__main_block_impl_0((void </em>)<strong>main_block_func_0,<br>&amp;</strong>main_block_desc_0_DATA)); ((void (<em>)(__block_impl </em>))<br>((<strong>block_impl *)myblock)-&gt;FuncPtr)((</strong>block_impl *)myblock); } return 0;}  </p>
+</blockquote>
+</blockquote>
+<ul>
+<li>注意事项</li>
+</ul>
+<blockquote>
+<p>block容易造成循环引用，在block里面如果使用了self，然后形成强引用时，需要打断循环引用<br>在MRC下用_block，在ARC下使用__weak;</p>
+</blockquote>
+<ul>
+<li>关于Block在内存中的位置</li>
+</ul>
+<blockquote>
+<p>block块的存储位置（block入口的地址）可能存放在3个地方：代码区（全局区）、堆区、栈区（ARC情况下回自动拷贝到堆区，因此ARC下只有两个地方：代码区和堆区）。</p>
+<ul>
+<li><p>代码区：<br> 不访问栈区的变量（如局部变量），且不访问堆区的变量（如用alloc创建的对象）时，此时block存放在代码区；</p>
+</li>
+<li><p>堆区：<br> 如果访问了堆区的变量（如局部变量），或堆区的变量（如用alloc创建的对象），此时block存方在堆区；需要注意</p>
+</li>
+<li><p>栈区：<br> 在ARC情况下自动拷贝到堆区，如果不是ARC则存放在栈区，所在函数执行完毕就回释放，想再外面调用需要用copy指向它，这样就拷贝到了堆区，strong属性不会拷贝、会造成野指针错区。（需要理解ARC是一种编译器特性，即编译器在编译时在核实的地方插入retain、release、autorelease，而不是iOS的运行时特性）。</p>
+</li>
+</ul>
+<p>block块代码存在堆区时,需要注意，因为堆区不像代码区不变化，堆区是动态的（不断的创建销毁），当没有强指针指向的时候就会被销毁，如果再去访问这段代码时，程序就会崩溃！所以此种情况在定义block属性时需要指定为strong or copy。block是一段代码，即不可变，所以使用copy也不会深拷贝。</p>
+</blockquote>
 
       
     </div>
+    
+    
+    
+    
+    <div>
+      
+        
+<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------本文结束<i class="fa fa-paw"></i>感谢阅读------</div>
+    
+</div>
 
+
+      
+    </div>		
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    渐行渐远
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://hkm5558.github.io/2017/11/28/block本质是什么/" title="Block本质是什么">https://hkm5558.github.io/2017/11/28/block本质是什么/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"><i class="fa fa-tag"></i> iOS</a>
+          
+            <a href="/tags/Block/" rel="tag"><i class="fa fa-tag"></i> Block</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/28/解决-TableView-滑动卡顿/" rel="next" title="解决 TableView 滑动卡顿">
+                <i class="fa fa-chevron-left"></i> 解决 TableView 滑动卡顿
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -422,6 +558,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -707,6 +847,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
 
   
 
