@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="iOS," />
+  <meta name="keywords" content="iOS,KVC," />
 
 
 
@@ -86,18 +86,18 @@
 
 
 
-<meta name="description" content="Coding for fun">
-<meta name="keywords" content="iOS">
+<meta name="description" content="setValue:forKey:   首先搜索setKey:方法。（key指成员变量名，首字母大写）   上面的setter方法没找到, 如果类方法accessInstanceVariablesDirectly返回YES。那么按 _key, _isKey, key, iskey的顺序搜索成员名。（NSKeyValueC">
+<meta name="keywords" content="iOS,KVC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="KVC机制如何通过key找到value">
 <meta property="og:url" content="https://hkm5558.github.io/2017/11/28/KVC机制如何通过key找到value/index.html">
 <meta property="og:site_name" content="渐行渐远的博客">
-<meta property="og:description" content="Coding for fun">
+<meta property="og:description" content="setValue:forKey:   首先搜索setKey:方法。（key指成员变量名，首字母大写）   上面的setter方法没找到, 如果类方法accessInstanceVariablesDirectly返回YES。那么按 _key, _isKey, key, iskey的顺序搜索成员名。（NSKeyValueCodingCatogery中实现的类方法，默认实现为返回YES）   如果没有找">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-28T11:03:39.000Z">
+<meta property="og:updated_time" content="2017-11-28T11:04:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="KVC机制如何通过key找到value">
-<meta name="twitter:description" content="Coding for fun">
+<meta name="twitter:description" content="setValue:forKey:   首先搜索setKey:方法。（key指成员变量名，首字母大写）   上面的setter方法没找到, 如果类方法accessInstanceVariablesDirectly返回YES。那么按 _key, _isKey, key, iskey的顺序搜索成员名。（NSKeyValueCodingCatogery中实现的类方法，默认实现为返回YES）   如果没有找">
 
 
 
@@ -338,6 +338,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Question/" itemprop="url" rel="index">
+                    <span itemprop="name">Question</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -364,7 +386,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0 字
+                  268 字
                 </span>
               
 
@@ -401,7 +423,25 @@
       
 
       
-        
+        <p>setValue:forKey:</p>
+<blockquote>
+<ol>
+<li>首先搜索<code>setKey:</code>方法。<br>（key指成员变量名，首字母大写）  </li>
+<li>上面的setter方法没找到, 如果类方法<code>accessInstanceVariablesDirectly</code>返回<code>YES</code>。<br>那么按 <code>_key</code>, <code>_isKey</code>, <code>key</code>, iskey的顺序搜索成员名。（<code>NSKeyValueCodingCatogery</code>中实现的类方法，默认实现为返回<code>YES</code>）  </li>
+<li>如果没有找到成员变量，调用<code>setValue:forUnderfinedKey:</code></li>
+</ol>
+</blockquote>
+<p>valueForKey:</p>
+<blockquote>
+<ol>
+<li>首先按<code>getKey</code>，<code>key</code>，<code>isKey</code>的顺序查找getter方法，找到直接调用。如果是<code>BOOL</code>、<code>int</code>等内建值类型，会做<code>NSNumber</code>的转换。  </li>
+<li>上面的getter没找到，查找<code>countOfKey</code>、<code>objectInKeyAtindex、KeyAtindexes</code>格式的方法。如<code>果countOfKey</code>和另外两个方法中的一个找到，那么就会返回一个可以响应<code>NSArray</code>所有方法的代理集合的<code>NSArray</code>消息方法。  </li>
+<li>还没找到，查找<code>countOfKey</code>、<code>enumeratorOfKey</code>、<code>memberOfKey</code>格式的方法。如果这三个方法都找到，那么就返回一个可以响应<code>NSSet</code>所有方法的代理集合。  </li>
+<li>还是没找到，如果类方法<code>accessInstanceVariablesDirectly</code>返回<code>YES</code>。那么按 <code>_key</code>，<code>_isKey</code>，<code>key</code>，<code>iskey</code>的顺序搜索成员名。    </li>
+<li>再没找到，调用<code>valueForUndefinedKey</code>。  </li>
+</ol>
+</blockquote>
+
       
     </div>
     
@@ -450,6 +490,8 @@
         <div class="post-tags">
           
             <a href="/tags/iOS/" rel="tag"><i class="fa fa-tag"></i> iOS</a>
+          
+            <a href="/tags/KVC/" rel="tag"><i class="fa fa-tag"></i> KVC</a>
           
         </div>
       
@@ -567,7 +609,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -641,7 +683,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">3.4k</span>
+    <span title="Site words total count">3.7k</span>
   
 </div>
 
