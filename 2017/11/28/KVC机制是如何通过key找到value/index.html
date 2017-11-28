@@ -86,17 +86,17 @@
 
 
 
-<meta name="description" content="title: KVC机制是如何通过key找到valuedate: 2017-11-28 18:33:53tags: [iOS, KVC]categories: Question  setValue:forKey:   首先搜索setKey:方法。（key指成员变量名，首字母大写）   上面的setter方法没找到, 如">
+<meta name="description" content="title: KVC机制是如何通过key找到valuedate: 2017-11-28 18:33:53tags: [iOS, KVC]categories: Question">
 <meta property="og:type" content="article">
 <meta property="og:title" content="渐行渐远的博客">
 <meta property="og:url" content="https://hkm5558.github.io/2017/11/28/KVC机制是如何通过key找到value/index.html">
 <meta property="og:site_name" content="渐行渐远的博客">
-<meta property="og:description" content="title: KVC机制是如何通过key找到valuedate: 2017-11-28 18:33:53tags: [iOS, KVC]categories: Question  setValue:forKey:   首先搜索setKey:方法。（key指成员变量名，首字母大写）   上面的setter方法没找到, 如果类方法accessInstanceVariablesDirectly返回YE">
+<meta property="og:description" content="title: KVC机制是如何通过key找到valuedate: 2017-11-28 18:33:53tags: [iOS, KVC]categories: Question">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-28T10:59:42.000Z">
+<meta property="og:updated_time" content="2017-11-28T11:00:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="渐行渐远的博客">
-<meta name="twitter:description" content="title: KVC机制是如何通过key找到valuedate: 2017-11-28 18:33:53tags: [iOS, KVC]categories: Question  setValue:forKey:   首先搜索setKey:方法。（key指成员变量名，首字母大写）   上面的setter方法没找到, 如果类方法accessInstanceVariablesDirectly返回YE">
+<meta name="twitter:description" content="title: KVC机制是如何通过key找到valuedate: 2017-11-28 18:33:53tags: [iOS, KVC]categories: Question">
 
 
 
@@ -326,7 +326,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-28T18:59:42+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-28T19:00:53+08:00">
                 2017-11-28
               </time>
             
@@ -363,7 +363,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  291 字
+                  23 字
                 </span>
               
 
@@ -403,24 +403,6 @@
         <hr>
 <p>title: KVC机制是如何通过key找到value<br>date: 2017-11-28 18:33:53<br>tags: [iOS, KVC]<br>categories: Question</p>
 <hr>
-<p>setValue:forKey:</p>
-<blockquote>
-<ol>
-<li>首先搜索<code>setKey:</code>方法。<br>（key指成员变量名，首字母大写）  </li>
-<li>上面的setter方法没找到, 如果类方法<code>accessInstanceVariablesDirectly</code>返回<code>YES</code>。<br>那么按 <code>_key</code>, <code>_isKey</code>, <code>key</code>, iskey的顺序搜索成员名。（<code>NSKeyValueCodingCatogery</code>中实现的类方法，默认实现为返回<code>YES</code>）  </li>
-<li>如果没有找到成员变量，调用<code>setValue:forUnderfinedKey:</code></li>
-</ol>
-</blockquote>
-<p>valueForKey:</p>
-<blockquote>
-<ol>
-<li>首先按<code>getKey</code>，<code>key</code>，<code>isKey</code>的顺序查找getter方法，找到直接调用。如果是<code>BOOL</code>、<code>int</code>等内建值类型，会做<code>NSNumber</code>的转换。  </li>
-<li>上面的getter没找到，查找<code>countOfKey</code>、<code>objectInKeyAtindex、KeyAtindexes</code>格式的方法。如<code>果countOfKey</code>和另外两个方法中的一个找到，那么就会返回一个可以响应<code>NSArray</code>所有方法的代理集合的<code>NSArray</code>消息方法。  </li>
-<li>还没找到，查找<code>countOfKey</code>、<code>enumeratorOfKey</code>、<code>memberOfKey</code>格式的方法。如果这三个方法都找到，那么就返回一个可以响应<code>NSSet</code>所有方法的代理集合。  </li>
-<li>还是没找到，如果类方法<code>accessInstanceVariablesDirectly</code>返回<code>YES</code>。那么按 <code>_key</code>，<code>_isKey</code>，<code>key</code>，<code>iskey</code>的顺序搜索成员名。    </li>
-<li>再没找到，调用<code>valueForUndefinedKey</code>。  </li>
-</ol>
-</blockquote>
 
       
     </div>
@@ -655,7 +637,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">3.7k</span>
+    <span title="Site words total count">3.4k</span>
   
 </div>
 
