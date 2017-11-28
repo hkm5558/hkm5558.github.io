@@ -86,8 +86,8 @@ index_with_subtitle: false
 menu:
   home: / || home
   #about: /about/ || user
-  #tags: /tags/ || tags
-  #categories: /categories/ || th
+  tags: /tags/ || tags
+  categories: /categories/ || th
   archives: /archives/ || archive
   #schedule: /schedule/ || calendar
   #sitemap: /sitemap.xml || sitemap
@@ -667,7 +667,7 @@ motion:
 fancybox: true
 
 # Progress bar in the top during page loading.
-pace: false
+pace: true
 # Themes list:
 #pace-theme-big-counter
 #pace-theme-bounce
@@ -684,7 +684,7 @@ pace: false
 #pace-theme-minimal
 # For example
 # pace_theme: pace-theme-center-simple
-pace_theme: pace-theme-minimal
+pace_theme: pace-theme-flash
 
 # Canvas-nest
 canvas_nest: true

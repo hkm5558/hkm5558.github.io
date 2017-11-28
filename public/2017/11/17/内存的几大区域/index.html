@@ -14,6 +14,13 @@
 
 
 
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
 
 
 
@@ -68,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="iOS," />
+  <meta name="keywords" content="iOS,内存," />
 
 
 
@@ -79,22 +86,22 @@
 
 
 
-<meta name="description" content="1. 栈区(stack) 栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点时有限制，数据不灵活。［先进后出］  栈空间分静态分配 和动态分配两种。  静态分配是编译器完成的，比如自动变量(auto)的分配。动态分配由alloca函数">
-<meta name="keywords" content="iOS">
+<meta name="description" content="1. 栈区(stack) 栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点是有限制，数据不灵活。［先进后出］  栈空间分静态分配 和动态分配两种。  静态分配是编译器完成的，比如自动变量(auto)的分配。动态分配由alloca函数">
+<meta name="keywords" content="iOS,内存">
 <meta property="og:type" content="article">
 <meta property="og:title" content="内存的几大区域">
 <meta property="og:url" content="https://hkm5558.github.io/2017/11/17/内存的几大区域/index.html">
 <meta property="og:site_name" content="渐行渐远的博客">
-<meta property="og:description" content="1. 栈区(stack) 栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点时有限制，数据不灵活。［先进后出］  栈空间分静态分配 和动态分配两种。  静态分配是编译器完成的，比如自动变量(auto)的分配。动态分配由alloca函数完成。栈的动态分配无需释放(是自动的)，也就没有释放函数。为可移植的程序起见，栈">
+<meta property="og:description" content="1. 栈区(stack) 栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点是有限制，数据不灵活。［先进后出］  栈空间分静态分配 和动态分配两种。  静态分配是编译器完成的，比如自动变量(auto)的分配。动态分配由alloca函数完成。栈的动态分配无需释放(是自动的)，也就没有释放函数。为可移植的程序起见，栈">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://hkm5558.github.io/2017/11/17/内存的几大区域/pic1.jpg">
 <meta property="og:image" content="https://hkm5558.github.io/2017/11/17/内存的几大区域/pic2.jpg">
 <meta property="og:image" content="https://hkm5558.github.io/2017/11/17/内存的几大区域/pic3.jpg">
 <meta property="og:image" content="https://hkm5558.github.io/2017/11/17/内存的几大区域/pic4.png">
-<meta property="og:updated_time" content="2017-11-18T09:21:48.000Z">
+<meta property="og:updated_time" content="2017-11-28T06:34:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="内存的几大区域">
-<meta name="twitter:description" content="1. 栈区(stack) 栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点时有限制，数据不灵活。［先进后出］  栈空间分静态分配 和动态分配两种。  静态分配是编译器完成的，比如自动变量(auto)的分配。动态分配由alloca函数完成。栈的动态分配无需释放(是自动的)，也就没有释放函数。为可移植的程序起见，栈">
+<meta name="twitter:description" content="1. 栈区(stack) 栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点是有限制，数据不灵活。［先进后出］  栈空间分静态分配 和动态分配两种。  静态分配是编译器完成的，比如自动变量(auto)的分配。动态分配由alloca函数完成。栈的动态分配无需释放(是自动的)，也就没有释放函数。为可移植的程序起见，栈">
 <meta name="twitter:image" content="https://hkm5558.github.io/2017/11/17/内存的几大区域/pic1.jpg">
 
 
@@ -166,7 +173,7 @@
       </a>
     </div>
       
-        <h1 class="site-subtitle" itemprop="description">Coding for fun</h1>
+        <h1 class="site-subtitle" itemprop="description">Coding for funs</h1>
       
   </div>
 
@@ -192,6 +199,26 @@
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
             首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
           </a>
         </li>
       
@@ -328,8 +355,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Interview-Questions/" itemprop="url" rel="index">
-                    <span itemprop="name">Interview Questions</span>
+                  <a href="/categories/Question/" itemprop="url" rel="index">
+                    <span itemprop="name">Question</span>
                   </a>
                 </span>
 
@@ -364,7 +391,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  
+                  1,333 字
                 </span>
               
 
@@ -380,7 +407,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  
+                  5 分钟
                 </span>
               
             </div>
@@ -402,7 +429,7 @@
 
       
         <h2 id="1-栈区-stack"><a href="#1-栈区-stack" class="headerlink" title="1. 栈区(stack)"></a>1. 栈区(stack)</h2><blockquote>
-<p>栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点时有限制，数据不灵活。［先进后出］</p>
+<p>栈区(stack) 由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的。优点是快速高效，缺点是有限制，数据不灵活。［先进后出］</p>
 </blockquote>
 <p>栈空间分静态分配 和动态分配两种。</p>
 <blockquote>
@@ -515,6 +542,8 @@
           
             <a href="/tags/iOS/" rel="tag"><i class="fa fa-tag"></i> iOS</a>
           
+            <a href="/tags/内存/" rel="tag"><i class="fa fa-tag"></i> 内存</a>
+          
         </div>
       
 
@@ -522,6 +551,22 @@
       
       
 
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/18/如何分析App内存/" rel="prev" title="如何分析App内存">
+                如何分析App内存 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
 
       
@@ -555,6 +600,9 @@
         
           
   
+
+
+
   <div class="sidebar-toggle">
     <div class="sidebar-toggle-line-wrap">
       <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
@@ -599,7 +647,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -620,10 +668,10 @@
               
               
               <div class="site-state-item site-state-tags">
-                
-                  <span class="site-state-item-count">1</span>
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
-                
+                </a>
               </div>
             
 
@@ -650,6 +698,10 @@
           
 
           
+  <div id="music163player">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=320 height=86 src="//music.163.com/outchain/player?type=2&id=16426574&auto=0&height=66">
+    </iframe>
+  </div>
 
         </div>
       </section>
@@ -707,7 +759,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count"></span>
+    <span title="Site words total count">3.7k</span>
   
 </div>
 

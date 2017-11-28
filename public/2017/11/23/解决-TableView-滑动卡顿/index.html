@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="iOS,TableView,优化," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. 最常用的就是cell的重用， 注册重用标识符 如果不重用cell时，每当一个cell显示到屏幕上时，就会重新创建一个新的cell 如果有很多数据的时候，就会堆积很多cell。如果重用cell，为cell创建一个ID 每当需要显示cell 的时候，都会先去缓冲池中寻找可循环利用的cell，如果没有再重新创建cell">
+<meta name="keywords" content="iOS,TableView,优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解决 TableView 滑动卡顿">
+<meta property="og:url" content="https://hkm5558.github.io/2017/11/23/解决-TableView-滑动卡顿/index.html">
+<meta property="og:site_name" content="渐行渐远的博客">
+<meta property="og:description" content="1. 最常用的就是cell的重用， 注册重用标识符 如果不重用cell时，每当一个cell显示到屏幕上时，就会重新创建一个新的cell 如果有很多数据的时候，就会堆积很多cell。如果重用cell，为cell创建一个ID 每当需要显示cell 的时候，都会先去缓冲池中寻找可循环利用的cell，如果没有再重新创建cell   2. 避免cell的重新布局 cell的布局填充等操作 比较耗时，一般创">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-28T10:15:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="解决 TableView 滑动卡顿">
+<meta name="twitter:description" content="1. 最常用的就是cell的重用， 注册重用标识符 如果不重用cell时，每当一个cell显示到屏幕上时，就会重新创建一个新的cell 如果有很多数据的时候，就会堆积很多cell。如果重用cell，为cell创建一个ID 每当需要显示cell 的时候，都会先去缓冲池中寻找可循环利用的cell，如果没有再重新创建cell   2. 避免cell的重新布局 cell的布局填充等操作 比较耗时，一般创">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '9S64QK8IQV',
+      apiKey: 'cfec0965d458c2c339c680fdb118ecc2',
+      indexName: '‘hexo_name’',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://hkm5558.github.io/2017/11/23/解决-TableView-滑动卡顿/"/>
+
+
+
+
+
+  <title>解决 TableView 滑动卡顿 | 渐行渐远的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">渐行渐远的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">Coding for funs</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hkm5558.github.io/2017/11/23/解决-TableView-滑动卡顿/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="渐行渐远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="渐行渐远的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">解决 TableView 滑动卡顿</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-23T14:14:27+08:00">
+                2017-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Question/" itemprop="url" rel="index">
+                    <span itemprop="name">Question</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  827 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-最常用的就是cell的重用，-注册重用标识符"><a href="#1-最常用的就是cell的重用，-注册重用标识符" class="headerlink" title=" 1. 最常用的就是cell的重用， 注册重用标识符"></a> 1. <strong>最常用的就是cell的重用， 注册重用标识符</strong></h2><blockquote>
+<p>如果不重用cell时，每当一个cell显示到屏幕上时，就会重新创建一个新的cell</p>
+<p>如果有很多数据的时候，就会堆积很多cell。如果重用cell，为cell创建一个ID</p>
+<p>每当需要显示cell 的时候，都会先去缓冲池中寻找可循环利用的cell，如果没有再重新创建cell</p>
+</blockquote>
+<h2 id="2-避免cell的重新布局"><a href="#2-避免cell的重新布局" class="headerlink" title=" 2. 避免cell的重新布局"></a> 2. <strong>避免cell的重新布局</strong></h2><blockquote>
+<p>cell的布局填充等操作 比较耗时，一般创建时就布局好<br>可以将cell单独放到一个自定义类，在初始化时就布局好</p>
+</blockquote>
+<h2 id="3-提前计算并缓存cell的属性及内容"><a href="#3-提前计算并缓存cell的属性及内容" class="headerlink" title=" 3. 提前计算并缓存cell的属性及内容"></a> 3. <strong>提前计算并缓存cell的属性及内容</strong></h2><blockquote>
+<p>当我们创建cell的数据源方法时，编译器并不是先创建cell 再确定cell的高度<br>而是先根据内容一次确定每一个cell的高度，高度确定后，再创建要显示的cell，滚动时，每当cell进入凭虚都会计算高度，提前估算高度告诉编译器，编译器知道高度后，紧接着就会创建cell，这时再调用高度的具体计算方法，这样可以方式浪费时间去计算显示以外的cell</p>
+</blockquote>
+<h2 id="4-减少cell中控件的数量"><a href="#4-减少cell中控件的数量" class="headerlink" title=" 4. 减少cell中控件的数量"></a> 4. <strong>减少cell中控件的数量</strong></h2><blockquote>
+<p>尽量使cell得布局大致相同，不同风格的cell可以使用不用的重用标识符，初始化时添加控件，不使用的可以先隐藏</p>
+</blockquote>
+<h2 id="5-不要使用ClearColor，无背景色，透明度也不要设置为0"><a href="#5-不要使用ClearColor，无背景色，透明度也不要设置为0" class="headerlink" title=" 5. 不要使用ClearColor，无背景色，透明度也不要设置为0"></a> 5. <strong>不要使用ClearColor，无背景色，透明度也不要设置为0</strong></h2><blockquote>
+<p>因为这样渲染耗时比较长</p>
+</blockquote>
+<h2 id="6-使用局部更新"><a href="#6-使用局部更新" class="headerlink" title=" 6. 使用局部更新"></a> 6. <strong>使用局部更新</strong></h2><blockquote>
+<p>如果只是更新某组的话，使用reloadSection进行局部更新</p>
+</blockquote>
+<h2 id="7-加载网络数据，下载图片，使用异步加载，并对图片进行缓存"><a href="#7-加载网络数据，下载图片，使用异步加载，并对图片进行缓存" class="headerlink" title=" 7. 加载网络数据，下载图片，使用异步加载，并对图片进行缓存"></a> 7. <strong>加载网络数据，下载图片，使用异步加载，并对图片进行缓存</strong></h2><h2 id="8-尽量避免addView-给cell动态添加view"><a href="#8-尽量避免addView-给cell动态添加view" class="headerlink" title=" 8. 尽量避免addView 给cell动态添加view"></a> 8. <strong>尽量避免addView 给cell动态添加view</strong></h2><blockquote>
+<p>避免过多的消耗性能</p>
+</blockquote>
+<h2 id="9-按需加载cell，cell滚动很快时，只加载范围内的cell"><a href="#9-按需加载cell，cell滚动很快时，只加载范围内的cell" class="headerlink" title=" 9. 按需加载cell，cell滚动很快时，只加载范围内的cell"></a> 9. <strong>按需加载cell，cell滚动很快时，只加载范围内的cell</strong></h2><h2 id="10-不要实现无用的代理方法，tableView只遵守两个协议"><a href="#10-不要实现无用的代理方法，tableView只遵守两个协议" class="headerlink" title=" 10. 不要实现无用的代理方法，tableView只遵守两个协议"></a> 10. <strong>不要实现无用的代理方法，tableView只遵守两个协议</strong></h2><h2 id="11-缓存行高"><a href="#11-缓存行高" class="headerlink" title=" 11. 缓存行高"></a> 11. <strong>缓存行高</strong></h2><blockquote>
+<p>estimatedHeightForRow不能和HeightForRow里面的layoutIfNeed同时存在，这两者同时存在才会出现“窜动”的bug。所以我的建议是：只要是固定行高就写预估行高来减少行高调用次数提升性能。如果是动态行高就不要写预估方法了，用一个行高的缓存字典来减少代码的调用次数即可</p>
+</blockquote>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a><strong>小结</strong></h2><blockquote>
+<p>有了上面的方法，我们在优化tableView的时候就能很好解决卡顿的问题了。<br>在iOS应用中，UITableView应该是使用率最高的视图之一了。<br>iPod、时钟、日历、备忘录、Mail、天气、照片、电话、短信、<br>Safari、App Store、iTunes、Game Center…几乎所有自带的应用中都能看到它的身影，可见它的重要性。<br>然而在使用第三方应用时，却经常遇到性能上的问题，普遍表现在滚动时比较卡，特别是table cell中包含图片的情况时。<br>实际上只要针对性地优化一下，这种问题就不会有了。有兴趣的可以看看 LazyTableImages这个官方的例子程序，虽然也要从网上下载图片并显示，但滚动时丝毫不卡。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+    
+    <div>
+      
+        
+<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------本文结束<i class="fa fa-paw"></i>感谢阅读------</div>
+    
+</div>
+
+
+      
+    </div>		
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    渐行渐远
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://hkm5558.github.io/2017/11/23/解决-TableView-滑动卡顿/" title="解决 TableView 滑动卡顿">https://hkm5558.github.io/2017/11/23/解决-TableView-滑动卡顿/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"><i class="fa fa-tag"></i> iOS</a>
+          
+            <a href="/tags/TableView/" rel="tag"><i class="fa fa-tag"></i> TableView</a>
+          
+            <a href="/tags/优化/" rel="tag"><i class="fa fa-tag"></i> 优化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/18/如何分析App内存/" rel="next" title="如何分析App内存">
+                <i class="fa fa-chevron-left"></i> 如何分析App内存
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/25/block本质是什么/" rel="prev" title="Block本质是什么">
+                Block本质是什么 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+
+
+
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpeg"
+                alt="渐行渐远" />
+            
+              <p class="site-author-name" itemprop="name">渐行渐远</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/hkm5558" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+  <div id="music163player">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=320 height=86 src="//music.163.com/outchain/player?type=2&id=16426574&auto=0&height=66">
+    </iframe>
+  </div>
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-最常用的就是cell的重用，-注册重用标识符"><span class="nav-text"> 1. 最常用的就是cell的重用， 注册重用标识符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-避免cell的重新布局"><span class="nav-text"> 2. 避免cell的重新布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-提前计算并缓存cell的属性及内容"><span class="nav-text"> 3. 提前计算并缓存cell的属性及内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-减少cell中控件的数量"><span class="nav-text"> 4. 减少cell中控件的数量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-不要使用ClearColor，无背景色，透明度也不要设置为0"><span class="nav-text"> 5. 不要使用ClearColor，无背景色，透明度也不要设置为0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-使用局部更新"><span class="nav-text"> 6. 使用局部更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-加载网络数据，下载图片，使用异步加载，并对图片进行缓存"><span class="nav-text"> 7. 加载网络数据，下载图片，使用异步加载，并对图片进行缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-尽量避免addView-给cell动态添加view"><span class="nav-text"> 8. 尽量避免addView 给cell动态添加view</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-按需加载cell，cell滚动很快时，只加载范围内的cell"><span class="nav-text"> 9. 按需加载cell，cell滚动很快时，只加载范围内的cell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-不要实现无用的代理方法，tableView只遵守两个协议"><span class="nav-text"> 10. 不要实现无用的代理方法，tableView只遵守两个协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-缓存行高"><span class="nav-text"> 11. 缓存行高</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">渐行渐远</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">3.7k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+      <div id="needsharebutton-float">
+        <span class="btn">
+          <i class="fa fa-share-alt" aria-hidden="true"></i>
+        </span>
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.3"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+    
+      flOptions = {};
+      
+          flOptions.iconStyle = "box";
+      
+          flOptions.boxForm = "horizontal";
+      
+          flOptions.position = "middleRight";
+      
+          flOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-float', flOptions);
+    
+  </script>
+
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
+
+
+  
+
+</body>
+</html>
