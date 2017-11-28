@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="iOS,TableView,优化," />
+  <meta name="keywords" content="iOS,内存,Xcode,Instruments," />
 
 
 
@@ -86,18 +86,29 @@
 
 
 
-<meta name="description" content="1. 最常用的就是cell的重用， 注册重用标识符 如果不重用cell时，每当一个cell显示到屏幕上时，就会重新创建一个新的cell 如果有很多数据的时候，就会堆积很多cell。如果重用cell，为cell创建一个ID 每当需要显示cell 的时候，都会先去缓冲池中寻找可循环利用的cell，如果没有再重新创建cell">
-<meta name="keywords" content="iOS,TableView,优化">
+<meta name="description" content="Xcode下查看app内存使用情况有2种方法：  Navigator导航栏中的Debug navigator中的Memory  Instruments     1. Debug navigator中的Memory此方法是查看内存最简单直接有效的方法，真机调试时，通过Debug navigator中Memory查看app">
+<meta name="keywords" content="iOS,内存,Xcode,Instruments">
 <meta property="og:type" content="article">
-<meta property="og:title" content="解决 TableView 滑动卡顿">
-<meta property="og:url" content="https://hkm5558.github.io/2017/11/28/解决-TableView-滑动卡顿/index.html">
+<meta property="og:title" content="如何分析App内存">
+<meta property="og:url" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/index.html">
 <meta property="og:site_name" content="渐行渐远的博客">
-<meta property="og:description" content="1. 最常用的就是cell的重用， 注册重用标识符 如果不重用cell时，每当一个cell显示到屏幕上时，就会重新创建一个新的cell 如果有很多数据的时候，就会堆积很多cell。如果重用cell，为cell创建一个ID 每当需要显示cell 的时候，都会先去缓冲池中寻找可循环利用的cell，如果没有再重新创建cell   2. 避免cell的重新布局 cell的布局填充等操作 比较耗时，一般创">
+<meta property="og:description" content="Xcode下查看app内存使用情况有2种方法：  Navigator导航栏中的Debug navigator中的Memory  Instruments     1. Debug navigator中的Memory此方法是查看内存最简单直接有效的方法，真机调试时，通过Debug navigator中Memory查看app内存，入口如图  根据这个值查看app内存占用，这个内存是当前app占用的总内">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-28T09:36:14.000Z">
+<meta property="og:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic1.jpeg">
+<meta property="og:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic2.jpeg">
+<meta property="og:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic3.jpeg">
+<meta property="og:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic4.jpeg">
+<meta property="og:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic5.jpeg">
+<meta property="og:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic6.jpeg">
+<meta property="og:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic7.jpeg">
+<meta property="og:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic8.jpeg">
+<meta property="og:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic9.jpeg">
+<meta property="og:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic10.jpeg">
+<meta property="og:updated_time" content="2017-11-28T10:14:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="解决 TableView 滑动卡顿">
-<meta name="twitter:description" content="1. 最常用的就是cell的重用， 注册重用标识符 如果不重用cell时，每当一个cell显示到屏幕上时，就会重新创建一个新的cell 如果有很多数据的时候，就会堆积很多cell。如果重用cell，为cell创建一个ID 每当需要显示cell 的时候，都会先去缓冲池中寻找可循环利用的cell，如果没有再重新创建cell   2. 避免cell的重新布局 cell的布局填充等操作 比较耗时，一般创">
+<meta name="twitter:title" content="如何分析App内存">
+<meta name="twitter:description" content="Xcode下查看app内存使用情况有2种方法：  Navigator导航栏中的Debug navigator中的Memory  Instruments     1. Debug navigator中的Memory此方法是查看内存最简单直接有效的方法，真机调试时，通过Debug navigator中Memory查看app内存，入口如图  根据这个值查看app内存占用，这个内存是当前app占用的总内">
+<meta name="twitter:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic1.jpeg">
 
 
 
@@ -127,13 +138,13 @@
 
 
 
-  <link rel="canonical" href="https://hkm5558.github.io/2017/11/28/解决-TableView-滑动卡顿/"/>
+  <link rel="canonical" href="https://hkm5558.github.io/2017/11/18/如何分析App内存/"/>
 
 
 
 
 
-  <title>解决 TableView 滑动卡顿 | 渐行渐远的博客</title>
+  <title>如何分析App内存 | 渐行渐远的博客</title>
   
 
 
@@ -298,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hkm5558.github.io/2017/11/28/解决-TableView-滑动卡顿/">
+    <link itemprop="mainEntityOfPage" href="https://hkm5558.github.io/2017/11/18/如何分析App内存/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="渐行渐远">
@@ -315,7 +326,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">解决 TableView 滑动卡顿</h2>
+          <h2 class="post-title" itemprop="name headline">如何分析App内存</h2>
         
 
         <div class="post-meta">
@@ -327,8 +338,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-28T17:14:27+08:00">
-                2017-11-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-18T11:33:39+08:00">
+                2017-11-18
               </time>
             
 
@@ -386,7 +397,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  827 字
+                  585 字
                 </span>
               
 
@@ -402,7 +413,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3 分钟
+                  2 分钟
                 </span>
               
             </div>
@@ -423,34 +434,55 @@
       
 
       
-        <h2 id="1-最常用的就是cell的重用，-注册重用标识符"><a href="#1-最常用的就是cell的重用，-注册重用标识符" class="headerlink" title=" 1. 最常用的就是cell的重用， 注册重用标识符"></a> 1. <strong>最常用的就是cell的重用， 注册重用标识符</strong></h2><blockquote>
-<p>如果不重用cell时，每当一个cell显示到屏幕上时，就会重新创建一个新的cell</p>
-<p>如果有很多数据的时候，就会堆积很多cell。如果重用cell，为cell创建一个ID</p>
-<p>每当需要显示cell 的时候，都会先去缓冲池中寻找可循环利用的cell，如果没有再重新创建cell</p>
+        <blockquote>
+<p>Xcode下查看app内存使用情况有2种方法：</p>
+<ul>
+<li><p>Navigator导航栏中的Debug navigator中的Memory</p>
+</li>
+<li><p>Instruments</p>
+</li>
+</ul>
 </blockquote>
-<h2 id="2-避免cell的重新布局"><a href="#2-避免cell的重新布局" class="headerlink" title=" 2. 避免cell的重新布局"></a> 2. <strong>避免cell的重新布局</strong></h2><blockquote>
-<p>cell的布局填充等操作 比较耗时，一般创建时就布局好<br>可以将cell单独放到一个自定义类，在初始化时就布局好</p>
+<h2 id="1-Debug-navigator中的Memory"><a href="#1-Debug-navigator中的Memory" class="headerlink" title=" 1. Debug navigator中的Memory"></a> 1. Debug navigator中的Memory</h2><p>此方法是查看内存最简单直接有效的方法，真机调试时，通过Debug navigator中Memory查看app内存，入口如图</p>
+<img src="/2017/11/18/如何分析App内存/pic1.jpeg" title="图片来源见水印">
+<p>根据这个值查看app内存占用，这个内存是当前app占用的总内存，是堆栈内存、虚拟内存（OpenGL占用的显存算在虚拟内存中里面）的总和。</p>
+<h2 id="2-Instruments"><a href="#2-Instruments" class="headerlink" title="2. Instruments"></a>2. Instruments</h2><p>启动Instruments的方法是，Product-&gt;Profile，经过漫长的编译时间后，出现Instruments界面，如下图</p>
+<img src="/2017/11/18/如何分析App内存/pic2.jpeg" title="图片来源见水印">
+<p>Instruments中，可以分析内存的工具有Activity Monitor、Allocations、Leaks。</p>
+<blockquote>
+<p><strong>Leaks</strong><br>Leaks是检测内存泄露的工具，很有用。Leaks运行中，看到下面这个红叉叉就表示有内存泄露了</p>
+<img src="/2017/11/18/如何分析App内存/pic3.jpeg" title="图片来源见水印">  
 </blockquote>
-<h2 id="3-提前计算并缓存cell的属性及内容"><a href="#3-提前计算并缓存cell的属性及内容" class="headerlink" title=" 3. 提前计算并缓存cell的属性及内容"></a> 3. <strong>提前计算并缓存cell的属性及内容</strong></h2><blockquote>
-<p>当我们创建cell的数据源方法时，编译器并不是先创建cell 再确定cell的高度<br>而是先根据内容一次确定每一个cell的高度，高度确定后，再创建要显示的cell，滚动时，每当cell进入凭虚都会计算高度，提前估算高度告诉编译器，编译器知道高度后，紧接着就会创建cell，这时再调用高度的具体计算方法，这样可以方式浪费时间去计算显示以外的cell</p>
+<hr>
+<blockquote>
+<p><strong>Allocations</strong><br>Allocations是检测堆栈内存的，下面的VM tracker检测虚拟内存。Allocations运行起来如下图</p>
+<img src="/2017/11/18/如何分析App内存/pic4.jpeg" title="图片来源见水印">
+<p>Allocations永远比Debug navigator Memory中显示的内存要小，就是因为Allocations中没有统计虚拟内存。<br>下图参考：<br><img src="/2017/11/18/如何分析App内存/pic5.jpeg" title="图片来源见水印"></p>
+<p>部分malloc出来的内存也算在虚拟内存中，下图参考自A look at how malloc works on the Mac<br><img src="/2017/11/18/如何分析App内存/pic6.jpeg" title="图片来源见水印"></p>
 </blockquote>
-<h2 id="4-减少cell中控件的数量"><a href="#4-减少cell中控件的数量" class="headerlink" title=" 4. 减少cell中控件的数量"></a> 4. <strong>减少cell中控件的数量</strong></h2><blockquote>
-<p>尽量使cell得布局大致相同，不同风格的cell可以使用不用的重用标识符，初始化时添加控件，不使用的可以先隐藏</p>
+<hr>
+<blockquote>
+<p><strong>Activity monitor</strong><br>Activity monitor看手机整体内存情况的，这里的显示app内存值和Debug navigator中的Memory显示的值是一样的<br><img src="/2017/11/18/如何分析App内存/pic7.jpeg" title="图片来源见水印"></p>
 </blockquote>
-<h2 id="5-不要使用ClearColor，无背景色，透明度也不要设置为0"><a href="#5-不要使用ClearColor，无背景色，透明度也不要设置为0" class="headerlink" title=" 5. 不要使用ClearColor，无背景色，透明度也不要设置为0"></a> 5. <strong>不要使用ClearColor，无背景色，透明度也不要设置为0</strong></h2><blockquote>
-<p>因为这样渲染耗时比较长</p>
+<hr>
+<blockquote>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li><p>App最多能占用多少内存不闪退</p>
+<blockquote>
+<p>占用机器内存的一半左右就会闪退，和系统版本、后台程序数有关。</p>
+<img src="/2017/11/18/如何分析App内存/pic8.jpeg" title="图片来源见水印">
+<p>不同渠道对内存有不同的要求，例如如下某渠道</p>
+<img src="/2017/11/18/如何分析App内存/pic9.jpeg" title="图片来源见水印">
 </blockquote>
-<h2 id="6-使用局部更新"><a href="#6-使用局部更新" class="headerlink" title=" 6. 使用局部更新"></a> 6. <strong>使用局部更新</strong></h2><blockquote>
-<p>如果只是更新某组的话，使用reloadSection进行局部更新</p>
+</li>
+<li><p>iOS的App为什么内存没有泄露，内存却降不下来</p>
+<blockquote>
+<p> eg: 创建大概20个哥布林spine动画，此时内存占用46M，然后释放掉，内存占用竟然还是46M，以为是spine有内存泄露，Leaks检测没有发现内存泄露。反复加载释放20个哥布林，内存都没有超过48M，但是为毛内存没有下降，而是维持在46M左右</p>
+<img src="/2017/11/18/如何分析App内存/pic10.jpeg" title="图片来源见水印">
+<p>因为<br>（1）图片加入了TextureCache，占用了部分内存<br>（2）malloc出来的一部分内存算到了VM（虚拟内存）中，为了下次malloc速度更快，这部分内存虽然调用了free，但iOS系统依然没有将其回收。这就是上面说的部分malloc出来的内存也算在虚拟内存中。</p>
 </blockquote>
-<h2 id="7-加载网络数据，下载图片，使用异步加载，并对图片进行缓存"><a href="#7-加载网络数据，下载图片，使用异步加载，并对图片进行缓存" class="headerlink" title=" 7. 加载网络数据，下载图片，使用异步加载，并对图片进行缓存"></a> 7. <strong>加载网络数据，下载图片，使用异步加载，并对图片进行缓存</strong></h2><h2 id="8-尽量避免addView-给cell动态添加view"><a href="#8-尽量避免addView-给cell动态添加view" class="headerlink" title=" 8. 尽量避免addView 给cell动态添加view"></a> 8. <strong>尽量避免addView 给cell动态添加view</strong></h2><blockquote>
-<p>避免过多的消耗性能</p>
-</blockquote>
-<h2 id="9-按需加载cell，cell滚动很快时，只加载范围内的cell"><a href="#9-按需加载cell，cell滚动很快时，只加载范围内的cell" class="headerlink" title=" 9. 按需加载cell，cell滚动很快时，只加载范围内的cell"></a> 9. <strong>按需加载cell，cell滚动很快时，只加载范围内的cell</strong></h2><h2 id="10-不要实现无用的代理方法，tableView只遵守两个协议"><a href="#10-不要实现无用的代理方法，tableView只遵守两个协议" class="headerlink" title=" 10. 不要实现无用的代理方法，tableView只遵守两个协议"></a> 10. <strong>不要实现无用的代理方法，tableView只遵守两个协议</strong></h2><h2 id="11-缓存行高"><a href="#11-缓存行高" class="headerlink" title=" 11. 缓存行高"></a> 11. <strong>缓存行高</strong></h2><blockquote>
-<p>estimatedHeightForRow不能和HeightForRow里面的layoutIfNeed同时存在，这两者同时存在才会出现“窜动”的bug。所以我的建议是：只要是固定行高就写预估行高来减少行高调用次数提升性能。如果是动态行高就不要写预估方法了，用一个行高的缓存字典来减少代码的调用次数即可</p>
-</blockquote>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a><strong>小结</strong></h2><blockquote>
-<p>有了上面的方法，我们在优化tableView的时候就能很好解决卡顿的问题了。<br>在iOS应用中，UITableView应该是使用率最高的视图之一了。<br>iPod、时钟、日历、备忘录、Mail、天气、照片、电话、短信、<br>Safari、App Store、iTunes、Game Center…几乎所有自带的应用中都能看到它的身影，可见它的重要性。<br>然而在使用第三方应用时，却经常遇到性能上的问题，普遍表现在滚动时比较卡，特别是table cell中包含图片的情况时。<br>实际上只要针对性地优化一下，这种问题就不会有了。有兴趣的可以看看 LazyTableImages这个官方的例子程序，虽然也要从网上下载图片并显示，但滚动时丝毫不卡。</p>
+</li>
+</ul>
 </blockquote>
 
       
@@ -485,7 +517,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://hkm5558.github.io/2017/11/28/解决-TableView-滑动卡顿/" title="解决 TableView 滑动卡顿">https://hkm5558.github.io/2017/11/28/解决-TableView-滑动卡顿/</a>
+    <a href="https://hkm5558.github.io/2017/11/18/如何分析App内存/" title="如何分析App内存">https://hkm5558.github.io/2017/11/18/如何分析App内存/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -502,9 +534,11 @@
           
             <a href="/tags/iOS/" rel="tag"><i class="fa fa-tag"></i> iOS</a>
           
-            <a href="/tags/TableView/" rel="tag"><i class="fa fa-tag"></i> TableView</a>
+            <a href="/tags/内存/" rel="tag"><i class="fa fa-tag"></i> 内存</a>
           
-            <a href="/tags/优化/" rel="tag"><i class="fa fa-tag"></i> 优化</a>
+            <a href="/tags/Xcode/" rel="tag"><i class="fa fa-tag"></i> Xcode</a>
+          
+            <a href="/tags/Instruments/" rel="tag"><i class="fa fa-tag"></i> Instruments</a>
           
         </div>
       
@@ -517,8 +551,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/28/如何分析App内存/" rel="next" title="如何分析App内存">
-                <i class="fa fa-chevron-left"></i> 如何分析App内存
+              <a href="/2017/11/17/内存的几大区域/" rel="next" title="内存的几大区域">
+                <i class="fa fa-chevron-left"></i> 内存的几大区域
               </a>
             
           </div>
@@ -527,8 +561,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/28/block本质是什么/" rel="prev" title="Block本质是什么">
-                Block本质是什么 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/23/解决-TableView-滑动卡顿/" rel="prev" title="解决 TableView 滑动卡顿">
+                解决 TableView 滑动卡顿 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -682,7 +716,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-最常用的就是cell的重用，-注册重用标识符"><span class="nav-text"> 1. 最常用的就是cell的重用， 注册重用标识符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-避免cell的重新布局"><span class="nav-text"> 2. 避免cell的重新布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-提前计算并缓存cell的属性及内容"><span class="nav-text"> 3. 提前计算并缓存cell的属性及内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-减少cell中控件的数量"><span class="nav-text"> 4. 减少cell中控件的数量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-不要使用ClearColor，无背景色，透明度也不要设置为0"><span class="nav-text"> 5. 不要使用ClearColor，无背景色，透明度也不要设置为0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-使用局部更新"><span class="nav-text"> 6. 使用局部更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-加载网络数据，下载图片，使用异步加载，并对图片进行缓存"><span class="nav-text"> 7. 加载网络数据，下载图片，使用异步加载，并对图片进行缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-尽量避免addView-给cell动态添加view"><span class="nav-text"> 8. 尽量避免addView 给cell动态添加view</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-按需加载cell，cell滚动很快时，只加载范围内的cell"><span class="nav-text"> 9. 按需加载cell，cell滚动很快时，只加载范围内的cell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-不要实现无用的代理方法，tableView只遵守两个协议"><span class="nav-text"> 10. 不要实现无用的代理方法，tableView只遵守两个协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-缓存行高"><span class="nav-text"> 11. 缓存行高</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-text">小结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Debug-navigator中的Memory"><span class="nav-text"> 1. Debug navigator中的Memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Instruments"><span class="nav-text">2. Instruments</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-text">其他</span></a></li></ol></div>
             
 
           </div>

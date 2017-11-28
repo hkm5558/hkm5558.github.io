@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="iOS,内存,Xcode,Instruments," />
+  <meta name="keywords" content="iOS,Block," />
 
 
 
@@ -86,29 +86,20 @@
 
 
 
-<meta name="description" content="Xcode下查看app内存使用情况有2种方法：  Navigator导航栏中的Debug navigator中的Memory  Instruments     1. Debug navigator中的Memory此方法是查看内存最简单直接有效的方法，真机调试时，通过Debug navigator中Memory查看app">
-<meta name="keywords" content="iOS,内存,Xcode,Instruments">
+<meta name="description" content="- 底层实现    block是一个指针结构体，在终端下通过clang -rewrite-objc 指令查看C++代码。首先创建一个OS X 工程，写一个最简单的block利用终端编译生成C++代码clang -rewrite-objc main.m  其中几个重要的结构体和函数简介：__block_impl：这是一个">
+<meta name="keywords" content="iOS,Block">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何分析App内存">
-<meta property="og:url" content="https://hkm5558.github.io/2017/11/28/如何分析App内存/index.html">
+<meta property="og:title" content="Block本质是什么">
+<meta property="og:url" content="https://hkm5558.github.io/2017/11/25/block本质是什么/index.html">
 <meta property="og:site_name" content="渐行渐远的博客">
-<meta property="og:description" content="Xcode下查看app内存使用情况有2种方法：  Navigator导航栏中的Debug navigator中的Memory  Instruments     1. Debug navigator中的Memory此方法是查看内存最简单直接有效的方法，真机调试时，通过Debug navigator中Memory查看app内存，入口如图  根据这个值查看app内存占用，这个内存是当前app占用的总内">
+<meta property="og:description" content="- 底层实现    block是一个指针结构体，在终端下通过clang -rewrite-objc 指令查看C++代码。首先创建一个OS X 工程，写一个最简单的block利用终端编译生成C++代码clang -rewrite-objc main.m  其中几个重要的结构体和函数简介：__block_impl：这是一个结构体，也是C面向对象的体现，可以理解为block的基类;__main_blo">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://hkm5558.github.io/2017/11/28/如何分析App内存/pic1.jpeg">
-<meta property="og:image" content="https://hkm5558.github.io/2017/11/28/如何分析App内存/pic2.jpeg">
-<meta property="og:image" content="https://hkm5558.github.io/2017/11/28/如何分析App内存/pic3.jpeg">
-<meta property="og:image" content="https://hkm5558.github.io/2017/11/28/如何分析App内存/pic4.jpeg">
-<meta property="og:image" content="https://hkm5558.github.io/2017/11/28/如何分析App内存/pic5.jpeg">
-<meta property="og:image" content="https://hkm5558.github.io/2017/11/28/如何分析App内存/pic6.jpeg">
-<meta property="og:image" content="https://hkm5558.github.io/2017/11/28/如何分析App内存/pic7.jpeg">
-<meta property="og:image" content="https://hkm5558.github.io/2017/11/28/如何分析App内存/pic8.jpeg">
-<meta property="og:image" content="https://hkm5558.github.io/2017/11/28/如何分析App内存/pic9.jpeg">
-<meta property="og:image" content="https://hkm5558.github.io/2017/11/28/如何分析App内存/pic10.jpeg">
-<meta property="og:updated_time" content="2017-11-28T09:12:28.000Z">
+<meta property="og:image" content="https://hkm5558.github.io/2017/11/25/block本质是什么/pic1.jpeg">
+<meta property="og:updated_time" content="2017-11-28T10:16:29.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何分析App内存">
-<meta name="twitter:description" content="Xcode下查看app内存使用情况有2种方法：  Navigator导航栏中的Debug navigator中的Memory  Instruments     1. Debug navigator中的Memory此方法是查看内存最简单直接有效的方法，真机调试时，通过Debug navigator中Memory查看app内存，入口如图  根据这个值查看app内存占用，这个内存是当前app占用的总内">
-<meta name="twitter:image" content="https://hkm5558.github.io/2017/11/28/如何分析App内存/pic1.jpeg">
+<meta name="twitter:title" content="Block本质是什么">
+<meta name="twitter:description" content="- 底层实现    block是一个指针结构体，在终端下通过clang -rewrite-objc 指令查看C++代码。首先创建一个OS X 工程，写一个最简单的block利用终端编译生成C++代码clang -rewrite-objc main.m  其中几个重要的结构体和函数简介：__block_impl：这是一个结构体，也是C面向对象的体现，可以理解为block的基类;__main_blo">
+<meta name="twitter:image" content="https://hkm5558.github.io/2017/11/25/block本质是什么/pic1.jpeg">
 
 
 
@@ -138,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="https://hkm5558.github.io/2017/11/28/如何分析App内存/"/>
+  <link rel="canonical" href="https://hkm5558.github.io/2017/11/25/block本质是什么/"/>
 
 
 
 
 
-  <title>如何分析App内存 | 渐行渐远的博客</title>
+  <title>Block本质是什么 | 渐行渐远的博客</title>
   
 
 
@@ -309,7 +300,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hkm5558.github.io/2017/11/28/如何分析App内存/">
+    <link itemprop="mainEntityOfPage" href="https://hkm5558.github.io/2017/11/25/block本质是什么/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="渐行渐远">
@@ -326,7 +317,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">如何分析App内存</h2>
+          <h2 class="post-title" itemprop="name headline">Block本质是什么</h2>
         
 
         <div class="post-meta">
@@ -338,8 +329,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-28T16:33:39+08:00">
-                2017-11-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-25T19:40:16+08:00">
+                2017-11-25
               </time>
             
 
@@ -397,7 +388,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  585 字
+                  661 字
                 </span>
               
 
@@ -413,7 +404,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2 分钟
+                  3 分钟
                 </span>
               
             </div>
@@ -434,55 +425,35 @@
       
 
       
-        <blockquote>
-<p>Xcode下查看app内存使用情况有2种方法：</p>
+        <h2 id="底层实现"><a href="#底层实现" class="headerlink" title=" - 底层实现  "></a> - 底层实现  </h2><blockquote>
+<p> block是一个指针结构体，在终端下通过clang -rewrite-objc 指令查看C++代码。<br>首先创建一个OS X 工程，写一个最简单的block<br>利用终端编译生成C++代码<br><img src="/2017/11/25/block本质是什么/pic1.jpeg" title="图片来源见水印"><br>clang -rewrite-objc main.m</p>
+<blockquote>
+<p>其中几个重要的结构体和函数简介：<br><strong>__block_impl</strong>：这是一个结构体，也是C面向对象的体现，可以理解为block的基类;<br><strong>__main_block_impl_0</strong>: 可以理解为block变量;<br><strong>__main_block_func_0</strong>: 可以理解为匿名函数;<br><strong>__main_block_desc_0</strong>:block的描述, Block_size;  </p>
+<p>1、__block_impl<br><figure class="highlight plain"><figcaption><span>__block_impl &#123; void *isa; int Flags; int Reserved; void *FuncPtr;&#125;;```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;</span><br><span class="line">2、__main_block_impl_0</span><br><span class="line">&gt;&gt;```struct __main_block_impl_0 &#123; struct __block_impl impl; struct __main_block_desc_0* Desc; __main_block_impl_0(void *fp,</span><br><span class="line">            struct __main_block_desc_0 *desc, int flags=0) &#123;  impl.isa = &amp;_NSConcreteStackBlock; impl.Flags = flags;  impl.FuncPtr = fp; Desc = desc; &#125;&#125;;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>&gt;<br>3、__main_block_func_0</p>
+<blockquote>
+<figure class="highlight plain"><figcaption><span>void __main_block_func_0</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(struct __main_block_impl_0 *__cself) &#123; NSLog((NSString *)&amp;__NSConstantStringImpl__var_folders_gc_</span><br><span class="line">5fkhcz0n6px48vzc744hmp6c0000gn_T_main_eef954_mi_0);</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;<br>4、__main_block_desc_0</p>
+<blockquote>
+<figure class="highlight plain"><figcaption><span>__main_block_desc_0 &#123; size_t reserved; size_t Block_size;&#125; __main_block_desc_0_DATA </span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123; 0, sizeof(struct __main_block_impl_0)&#125;;int main(int argc, const char * argv[]) &#123;/* @autoreleasepool */</span><br><span class="line">&#123; __AtAutoreleasePool __autoreleasepool; void (*myblock)() = ((void (*)</span><br><span class="line">())&amp;__main_block_impl_0((void *)__main_block_func_0,</span><br><span class="line">&amp;__main_block_desc_0_DATA)); ((void (*)(__block_impl *))</span><br><span class="line">((__block_impl *)myblock)-&gt;FuncPtr)((__block_impl *)myblock); &#125; return 0;&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+</blockquote>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title=" - 注意事项"></a> - 注意事项</h2><blockquote>
+<p>block容易造成循环引用，在block里面如果使用了self，然后形成强引用时，需要打断循环引用<br>在MRC下用_block，在ARC下使用__weak;</p>
+</blockquote>
+<h2 id="关于Block在内存中的位置"><a href="#关于Block在内存中的位置" class="headerlink" title=" - 关于Block在内存中的位置"></a> - 关于Block在内存中的位置</h2><blockquote>
+<p>block块的存储位置（block入口的地址）可能存放在3个地方：代码区（全局区）、堆区、栈区（ARC情况下回自动拷贝到堆区，因此ARC下只有两个地方：代码区和堆区）。</p>
 <ul>
-<li><p>Navigator导航栏中的Debug navigator中的Memory</p>
+<li><p>代码区：<br> 不访问栈区的变量（如局部变量），且不访问堆区的变量（如用alloc创建的对象）时，此时block存放在代码区；</p>
 </li>
-<li><p>Instruments</p>
+<li><p>堆区：<br> 如果访问了堆区的变量（如局部变量），或堆区的变量（如用alloc创建的对象），此时block存方在堆区；需要注意</p>
 </li>
-</ul>
-</blockquote>
-<h2 id="1-Debug-navigator中的Memory"><a href="#1-Debug-navigator中的Memory" class="headerlink" title=" 1. Debug navigator中的Memory"></a> 1. Debug navigator中的Memory</h2><p>此方法是查看内存最简单直接有效的方法，真机调试时，通过Debug navigator中Memory查看app内存，入口如图</p>
-<img src="/2017/11/28/如何分析App内存/pic1.jpeg" title="图片来源见水印">
-<p>根据这个值查看app内存占用，这个内存是当前app占用的总内存，是堆栈内存、虚拟内存（OpenGL占用的显存算在虚拟内存中里面）的总和。</p>
-<h2 id="2-Instruments"><a href="#2-Instruments" class="headerlink" title="2. Instruments"></a>2. Instruments</h2><p>启动Instruments的方法是，Product-&gt;Profile，经过漫长的编译时间后，出现Instruments界面，如下图</p>
-<img src="/2017/11/28/如何分析App内存/pic2.jpeg" title="图片来源见水印">
-<p>Instruments中，可以分析内存的工具有Activity Monitor、Allocations、Leaks。</p>
-<blockquote>
-<p><strong>Leaks</strong><br>Leaks是检测内存泄露的工具，很有用。Leaks运行中，看到下面这个红叉叉就表示有内存泄露了</p>
-<img src="/2017/11/28/如何分析App内存/pic3.jpeg" title="图片来源见水印">  
-</blockquote>
-<hr>
-<blockquote>
-<p><strong>Allocations</strong><br>Allocations是检测堆栈内存的，下面的VM tracker检测虚拟内存。Allocations运行起来如下图</p>
-<img src="/2017/11/28/如何分析App内存/pic4.jpeg" title="图片来源见水印">
-<p>Allocations永远比Debug navigator Memory中显示的内存要小，就是因为Allocations中没有统计虚拟内存。<br>下图参考：<br><img src="/2017/11/28/如何分析App内存/pic5.jpeg" title="图片来源见水印"></p>
-<p>部分malloc出来的内存也算在虚拟内存中，下图参考自A look at how malloc works on the Mac<br><img src="/2017/11/28/如何分析App内存/pic6.jpeg" title="图片来源见水印"></p>
-</blockquote>
-<hr>
-<blockquote>
-<p><strong>Activity monitor</strong><br>Activity monitor看手机整体内存情况的，这里的显示app内存值和Debug navigator中的Memory显示的值是一样的<br><img src="/2017/11/28/如何分析App内存/pic7.jpeg" title="图片来源见水印"></p>
-</blockquote>
-<hr>
-<blockquote>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
-<li><p>App最多能占用多少内存不闪退</p>
-<blockquote>
-<p>占用机器内存的一半左右就会闪退，和系统版本、后台程序数有关。</p>
-<img src="/2017/11/28/如何分析App内存/pic8.jpeg" title="图片来源见水印">
-<p>不同渠道对内存有不同的要求，例如如下某渠道</p>
-<img src="/2017/11/28/如何分析App内存/pic9.jpeg" title="图片来源见水印">
-</blockquote>
-</li>
-<li><p>iOS的App为什么内存没有泄露，内存却降不下来</p>
-<blockquote>
-<p> eg: 创建大概20个哥布林spine动画，此时内存占用46M，然后释放掉，内存占用竟然还是46M，以为是spine有内存泄露，Leaks检测没有发现内存泄露。反复加载释放20个哥布林，内存都没有超过48M，但是为毛内存没有下降，而是维持在46M左右</p>
-<img src="/2017/11/28/如何分析App内存/pic10.jpeg" title="图片来源见水印">
-<p>因为<br>（1）图片加入了TextureCache，占用了部分内存<br>（2）malloc出来的一部分内存算到了VM（虚拟内存）中，为了下次malloc速度更快，这部分内存虽然调用了free，但iOS系统依然没有将其回收。这就是上面说的部分malloc出来的内存也算在虚拟内存中。</p>
-</blockquote>
+<li><p>栈区：<br> 在ARC情况下自动拷贝到堆区，如果不是ARC则存放在栈区，所在函数执行完毕就回释放，想再外面调用需要用copy指向它，这样就拷贝到了堆区，strong属性不会拷贝、会造成野指针错区。（需要理解ARC是一种编译器特性，即编译器在编译时在核实的地方插入retain、release、autorelease，而不是iOS的运行时特性）。</p>
 </li>
 </ul>
+<p>block块代码存在堆区时,需要注意，因为堆区不像代码区不变化，堆区是动态的（不断的创建销毁），当没有强指针指向的时候就会被销毁，如果再去访问这段代码时，程序就会崩溃！所以此种情况在定义block属性时需要指定为strong or copy。block是一段代码，即不可变，所以使用copy也不会深拷贝。</p>
 </blockquote>
 
       
@@ -517,7 +488,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://hkm5558.github.io/2017/11/28/如何分析App内存/" title="如何分析App内存">https://hkm5558.github.io/2017/11/28/如何分析App内存/</a>
+    <a href="https://hkm5558.github.io/2017/11/25/block本质是什么/" title="Block本质是什么">https://hkm5558.github.io/2017/11/25/block本质是什么/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -534,11 +505,7 @@
           
             <a href="/tags/iOS/" rel="tag"><i class="fa fa-tag"></i> iOS</a>
           
-            <a href="/tags/内存/" rel="tag"><i class="fa fa-tag"></i> 内存</a>
-          
-            <a href="/tags/Xcode/" rel="tag"><i class="fa fa-tag"></i> Xcode</a>
-          
-            <a href="/tags/Instruments/" rel="tag"><i class="fa fa-tag"></i> Instruments</a>
+            <a href="/tags/Block/" rel="tag"><i class="fa fa-tag"></i> Block</a>
           
         </div>
       
@@ -551,8 +518,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/17/内存的几大区域/" rel="next" title="内存的几大区域">
-                <i class="fa fa-chevron-left"></i> 内存的几大区域
+              <a href="/2017/11/23/解决-TableView-滑动卡顿/" rel="next" title="解决 TableView 滑动卡顿">
+                <i class="fa fa-chevron-left"></i> 解决 TableView 滑动卡顿
               </a>
             
           </div>
@@ -560,10 +527,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/11/28/解决-TableView-滑动卡顿/" rel="prev" title="解决 TableView 滑动卡顿">
-                解决 TableView 滑动卡顿 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -716,7 +679,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Debug-navigator中的Memory"><span class="nav-text"> 1. Debug navigator中的Memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Instruments"><span class="nav-text">2. Instruments</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-text">其他</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#底层实现"><span class="nav-text"> - 底层实现  </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意事项"><span class="nav-text"> - 注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于Block在内存中的位置"><span class="nav-text"> - 关于Block在内存中的位置</span></a></li></ol></div>
             
 
           </div>
