@@ -95,7 +95,7 @@
 <meta property="og:description" content="- 底层实现    block是一个指针结构体，在终端下通过clang -rewrite-objc 指令查看C++代码。首先创建一个OS X 工程，写一个最简单的block利用终端编译生成C++代码clang -rewrite-objc main.m  其中几个重要的结构体和函数简介：__block_impl：这是一个结构体，也是C面向对象的体现，可以理解为block的基类;__main_blo">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://hkm5558.github.io/2017/11/28/block本质是什么/pic1.jpeg">
-<meta property="og:updated_time" content="2017-11-28T10:08:58.000Z">
+<meta property="og:updated_time" content="2017-11-28T10:10:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Block本质是什么">
 <meta name="twitter:description" content="- 底层实现    block是一个指针结构体，在终端下通过clang -rewrite-objc 指令查看C++代码。首先创建一个OS X 工程，写一个最简单的block利用终端编译生成C++代码clang -rewrite-objc main.m  其中几个重要的结构体和函数简介：__block_impl：这是一个结构体，也是C面向对象的体现，可以理解为block的基类;__main_blo">
@@ -432,16 +432,14 @@
 <p>1、<br><code>__block_implstruct __block_impl { void *isa; int Flags; int Reserved; void *FuncPtr;};</code></p>
 <p>2、<br><code>__main_block_impl_0struct __main_block_impl_0 { struct __block_impl impl; struct __main_block_desc_0* Desc; __main_block_impl_0(void *fp,
             struct __main_block_desc_0 *desc, int flags=0) {  impl.isa = &amp;_NSConcreteStackBlock; impl.Flags = flags;  impl.FuncPtr = fp; Desc = desc; }};</code></p>
-<p>3、<br><code>__main_block_func_0static void __main_block_func_0
-(struct __main_block_impl_0 *__cself) { NSLog((NSString *)&amp;__NSConstantStringImpl__var_folders_gc_
-5fkhcz0n6px48vzc744hmp6c0000gn_T_main_eef954_mi_0);</code></p>
-<p>4、<br><code>__main_block_desc_0staticstruct __main_block_desc_0 { size_t reserved; size_t Block_size;} __main_block_desc_0_DATA =
+<p>3、<br><figure class="highlight plain"><figcaption><span>void __main_block_func_0</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(struct __main_block_impl_0 *__cself) &#123; NSLog((NSString *)&amp;__NSConstantStringImpl__var_folders_gc_</span><br><span class="line">5fkhcz0n6px48vzc744hmp6c0000gn_T_main_eef954_mi_0);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>&gt;<br>4、<br><code>__main_block_desc_0staticstruct __main_block_desc_0 { size_t reserved; size_t Block_size;} __main_block_desc_0_DATA =
 { 0, sizeof(struct __main_block_impl_0)};int main(int argc, const char * argv[]) {/* @autoreleasepool */
 { __AtAutoreleasePool __autoreleasepool; void (*myblock)() = ((void (*)
 ())&amp;__main_block_impl_0((void *)__main_block_func_0,
 &amp;__main_block_desc_0_DATA)); ((void (*)(__block_impl *))
 ((__block_impl *)myblock)-&gt;FuncPtr)((__block_impl *)myblock); } return 0;}</code>  </p>
-</blockquote>
 </blockquote>
 <h2 id="注意事项"><a href="#注意事项" class="headerlink" title=" - 注意事项"></a> - 注意事项</h2><blockquote>
 <p>block容易造成循环引用，在block里面如果使用了self，然后形成强引用时，需要打断循环引用<br>在MRC下用_block，在ARC下使用__weak;</p>
