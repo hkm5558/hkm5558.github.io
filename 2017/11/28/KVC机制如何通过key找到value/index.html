@@ -86,18 +86,18 @@
 
 
 
-<meta name="description" content="setValue:forKey:   首先搜索setKey:方法。（key指成员变量名，首字母大写）   上面的setter方法没找到, 如果类方法accessInstanceVariablesDirectly返回YES。那么按 _key, _isKey, key, iskey的顺序搜索成员名。（NSKeyValueC">
+<meta name="description" content="setValue:forKey:    首先搜索setKey:方法。（key指成员变量名，首字母大写）   上面的setter方法没找到, 如果类方法accessInstanceVariablesDirectly返回YES。那么按 _key, _isKey, key, iskey的顺序搜索成员名。（NSKeyValue">
 <meta name="keywords" content="iOS,KVC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="KVC机制如何通过key找到value">
 <meta property="og:url" content="https://hkm5558.github.io/2017/11/28/KVC机制如何通过key找到value/index.html">
 <meta property="og:site_name" content="渐行渐远的博客">
-<meta property="og:description" content="setValue:forKey:   首先搜索setKey:方法。（key指成员变量名，首字母大写）   上面的setter方法没找到, 如果类方法accessInstanceVariablesDirectly返回YES。那么按 _key, _isKey, key, iskey的顺序搜索成员名。（NSKeyValueCodingCatogery中实现的类方法，默认实现为返回YES）   如果没有找">
+<meta property="og:description" content="setValue:forKey:    首先搜索setKey:方法。（key指成员变量名，首字母大写）   上面的setter方法没找到, 如果类方法accessInstanceVariablesDirectly返回YES。那么按 _key, _isKey, key, iskey的顺序搜索成员名。（NSKeyValueCodingCatogery中实现的类方法，默认实现为返回YES）   如果没">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-28T11:04:50.000Z">
+<meta property="og:updated_time" content="2017-11-28T11:06:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="KVC机制如何通过key找到value">
-<meta name="twitter:description" content="setValue:forKey:   首先搜索setKey:方法。（key指成员变量名，首字母大写）   上面的setter方法没找到, 如果类方法accessInstanceVariablesDirectly返回YES。那么按 _key, _isKey, key, iskey的顺序搜索成员名。（NSKeyValueCodingCatogery中实现的类方法，默认实现为返回YES）   如果没有找">
+<meta name="twitter:description" content="setValue:forKey:    首先搜索setKey:方法。（key指成员变量名，首字母大写）   上面的setter方法没找到, 如果类方法accessInstanceVariablesDirectly返回YES。那么按 _key, _isKey, key, iskey的顺序搜索成员名。（NSKeyValueCodingCatogery中实现的类方法，默认实现为返回YES）   如果没">
 
 
 
@@ -423,7 +423,9 @@
       
 
       
-        <p>setValue:forKey:</p>
+        <ul>
+<li><strong>setValue:forKey</strong>:</li>
+</ul>
 <blockquote>
 <ol>
 <li>首先搜索<code>setKey:</code>方法。<br>（key指成员变量名，首字母大写）  </li>
@@ -431,7 +433,9 @@
 <li>如果没有找到成员变量，调用<code>setValue:forUnderfinedKey:</code></li>
 </ol>
 </blockquote>
-<p>valueForKey:</p>
+<ul>
+<li><strong>valueForKey</strong>:</li>
+</ul>
 <blockquote>
 <ol>
 <li>首先按<code>getKey</code>，<code>key</code>，<code>isKey</code>的顺序查找getter方法，找到直接调用。如果是<code>BOOL</code>、<code>int</code>等内建值类型，会做<code>NSNumber</code>的转换。  </li>
