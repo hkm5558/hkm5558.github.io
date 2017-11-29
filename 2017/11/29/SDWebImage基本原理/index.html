@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="iOS,SDWebImage," />
 
 
 
@@ -86,17 +86,18 @@
 
 
 
-<meta name="description" content="Coding for fun">
-<meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="https://hkm5558.github.io/tags/index.html">
+<meta name="description" content="###1. 入口 setImageWithURL:placeholderImage:options:  会先把 placeholderImage 显示，然后 SDWebImageManager 根据 URL 开始处理图片。    ###2. 进入 SDWebImageManagerdownloadWithURL:del">
+<meta name="keywords" content="iOS,SDWebImage">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SDWebImage基本原理">
+<meta property="og:url" content="https://hkm5558.github.io/2017/11/29/SDWebImage基本原理/index.html">
 <meta property="og:site_name" content="渐行渐远的博客">
-<meta property="og:description" content="Coding for fun">
+<meta property="og:description" content="###1. 入口 setImageWithURL:placeholderImage:options:  会先把 placeholderImage 显示，然后 SDWebImageManager 根据 URL 开始处理图片。    ###2. 进入 SDWebImageManagerdownloadWithURL:delegate:options:userInfo:  交给 SDImageCache">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-28T06:33:17.000Z">
+<meta property="og:updated_time" content="2017-11-29T02:20:14.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
-<meta name="twitter:description" content="Coding for fun">
+<meta name="twitter:title" content="SDWebImage基本原理">
+<meta name="twitter:description" content="###1. 入口 setImageWithURL:placeholderImage:options:  会先把 placeholderImage 显示，然后 SDWebImageManager 根据 URL 开始处理图片。    ###2. 进入 SDWebImageManagerdownloadWithURL:delegate:options:userInfo:  交给 SDImageCache">
 
 
 
@@ -126,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="https://hkm5558.github.io/tags/"/>
+  <link rel="canonical" href="https://hkm5558.github.io/2017/11/29/SDWebImage基本原理/"/>
 
 
 
 
 
-  <title>tags | 渐行渐远的博客</title>
+  <title>SDWebImage基本原理 | 渐行渐远的博客</title>
   
 
 
@@ -285,40 +286,294 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://hkm5558.github.io/2017/11/29/SDWebImage基本原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="渐行渐远">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="渐行渐远的博客">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h2 class="post-title" itemprop="name headline">tags</h2>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="tag-cloud">
-            <div class="tag-cloud-title">
-                目前共计 9 个标签
+          <h2 class="post-title" itemprop="name headline">SDWebImage基本原理</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-29T09:52:08+08:00">
+                2017-11-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Question/" itemprop="url" rel="index">
+                    <span itemprop="name">Question</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  623 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2 分钟
+                </span>
+              
             </div>
-            <div class="tag-cloud-tags">
-              <a href="/tags/Block/" style="font-size: 12px; color: #ccc">Block</a> <a href="/tags/Instruments/" style="font-size: 12px; color: #ccc">Instruments</a> <a href="/tags/KVC/" style="font-size: 12px; color: #ccc">KVC</a> <a href="/tags/SDWebImage/" style="font-size: 12px; color: #ccc">SDWebImage</a> <a href="/tags/TableView/" style="font-size: 12px; color: #ccc">TableView</a> <a href="/tags/Xcode/" style="font-size: 12px; color: #ccc">Xcode</a> <a href="/tags/iOS/" style="font-size: 30px; color: #111">iOS</a> <a href="/tags/优化/" style="font-size: 12px; color: #ccc">优化</a> <a href="/tags/内存/" style="font-size: 21px; color: #6f6f6f">内存</a>
-            </div>
-          </div>
-        
-      </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>###1. <strong>入口 <code>setImageWithURL:placeholderImage:options:</code></strong></p>
+<blockquote>
+<p>会先把 <code>placeholderImage</code> 显示，然后 <code>SDWebImageManager</code> 根据 URL 开始处理图片。  </p>
+</blockquote>
+<p>###2. <strong>进入 <code>SDWebImageManagerdownloadWithURL:delegate:options:userInfo:</code></strong></p>
+<blockquote>
+<p>交给 <code>SDImageCache</code> 从缓存查找图片是否已经下载<br><code>queryDiskCacheForKey:delegate:userInfo:</code></p>
+</blockquote>
+<p>###3. <strong>先从内存图片缓存查找是否有图片</strong></p>
+<blockquote>
+<p>如果内存中已经有图片缓存，<code>SDImageCacheDelegate</code> 回调 <code>imageCache:didFindImage:forKey:userInfo:</code> 到 <code>SDWebImageManager</code>，<code>SDWebImageManagerDelegate</code>回调 <code>webImageManager:didFinishWithImage:</code>到 <code>UIImageView+WebCache</code> 等前端展示图片</p>
+</blockquote>
+<p>###4. <strong>如果内存缓存中没有</strong></p>
+<blockquote>
+<p>生成 <code>NSInvocationOperation</code><br>添加到队列开始从硬盘查找图片是否已经缓存  </p>
+</blockquote>
+<p>###5. <strong>根据 <code>URLKey</code> 在硬盘缓存目录下尝试读取图片文件</strong></p>
+<blockquote>
+<p>这一步是在 <code>NSOperation</code> 进行的操作，所以回主线程进行结果回调 <code>notifyDelegate:</code></p>
+</blockquote>
+<p>###6. <strong>如果从硬盘读取到了图片</strong></p>
+<blockquote>
+<p>将图片添加到内存缓存中（如果空闲内存过小，会先清空内存缓存），<code>SDImageCacheDelegate</code> 回调 <code>imageCache:didFindImage:forKey:userInfo:</code>。<br>进而回调展示图片</p>
+</blockquote>
+<p>###7. <strong>如果从硬盘缓存目录读取不到图片</strong></p>
+<blockquote>
+<p>说明所有缓存都不存在该图片，需要下载图片，<br>回调 <code>imageCache:didNotFindImageForKey:userInfo:</code></p>
+</blockquote>
+<p>###8. <strong>下载图片</strong></p>
+<blockquote>
+<p>共享或重新生成一个下载器 <code>SDWebImageDownloader</code> 开始下载图片。图片下载由 <code>NSURLConnection</code> 来做，<br>实现相关 <code>delegate</code> 来判断图片下载中、下载完成和下载失败。<br><code>connection:didReceiveData:</code> 中<br>利用 <code>ImageIO</code> 做了按图片下载进度加载效果</p>
+</blockquote>
+<p>###9. <strong>数据下载完成</strong></p>
+<blockquote>
+<p><code>connectionDidFinishLoading:</code> 数据下载完成后交给 <code>SDWebImageDecoder</code> 做图片解码处理</p>
+</blockquote>
+<p>###10. <strong>图片解码</strong></p>
+<blockquote>
+<p>图片解码处理在一个 NSOperationQueue 完成，<br>不会拖慢主线程 UI。如果有需要对下载的图片进行二次处理，<br>最好也在这里完成，效率会好很多。</p>
+</blockquote>
+<p>###11. <strong>解码完成</strong></p>
+<blockquote>
+<p>在主线程 <code>notifyDelegateOnMainThreadWithInfo:</code><br>宣告解码完成，<br><code>imageDecoder:didFinishDecodingImage:userInfo:</code><br>回调给 <code>SDWebImageDownloader</code>。</p>
+</blockquote>
+<p>###12. <strong>图片下载完成</strong></p>
+<blockquote>
+<p><code>imageDownloader:didFinishWithImage:</code><br>回调给 <code>SDWebImageManager</code> 告知图片下载完成。<br>通知所有的 <code>downloadDelegates</code> 下载完成，<br>回调给需要的地方展示图片。</p>
+</blockquote>
+<p>###13. <strong>缓存图片</strong></p>
+<blockquote>
+<p>将图片保存到 <code>SDImageCache</code> 中，<br>内存缓存和硬盘缓存同时保存。<br>写文件到硬盘也在以单独 <code>NSInvocationOperation</code> 完成，<br>避免拖慢主线程。</p>
+</blockquote>
+<p>###14. <strong>其他</strong></p>
+<blockquote>
+<ul>
+<li><code>SDImageCache</code> 在初始化的时候会注册一些消息通知<br>在内存警告或退到后台的时候清理内存图片缓存，<br>应用结束的时候清理过期图片。  </li>
+<li><code>SDWebImage</code> 也提供了 <code>UIButton+WebCache</code> 和<br><code>MKAnnotationView+WebCache</code>，方便使用。</li>
+<li><code>SDWebImagePrefetcher</code> 可以预先下载图片，<br>方便后续使用。</li>
+</ul>
+</blockquote>
+
       
     </div>
     
     
     
+    
+    <div>
+      
+        
+<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">------本文结束<i class="fa fa-paw"></i>感谢阅读------</div>
+    
+</div>
+
+
+      
+    </div>		
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    渐行渐远
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://hkm5558.github.io/2017/11/29/SDWebImage基本原理/" title="SDWebImage基本原理">https://hkm5558.github.io/2017/11/29/SDWebImage基本原理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"><i class="fa fa-tag"></i> iOS</a>
+          
+            <a href="/tags/SDWebImage/" rel="tag"><i class="fa fa-tag"></i> SDWebImage</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/28/KVC机制如何通过key找到value/" rel="next" title="KVC机制如何通过key找到value">
+                <i class="fa fa-chevron-left"></i> KVC机制如何通过key找到value
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
