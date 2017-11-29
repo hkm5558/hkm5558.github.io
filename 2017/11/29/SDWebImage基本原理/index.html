@@ -86,18 +86,18 @@
 
 
 
-<meta name="description" content="###1. 入口 setImageWithURL:placeholderImage:options:  会先把 placeholderImage 显示，然后 SDWebImageManager 根据 URL 开始处理图片。    ###2. 进入 SDWebImageManagerdownloadWithURL:del">
+<meta name="description" content="1. 入口 setImageWithURL:placeholderImage:options: 会先把 placeholderImage 显示，然后 SDWebImageManager 根据 URL 开始处理图片。    2. 进入 SDWebImageManagerdownloadWithURL:delegate:o">
 <meta name="keywords" content="iOS,SDWebImage">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SDWebImage基本原理">
 <meta property="og:url" content="https://hkm5558.github.io/2017/11/29/SDWebImage基本原理/index.html">
 <meta property="og:site_name" content="渐行渐远的博客">
-<meta property="og:description" content="###1. 入口 setImageWithURL:placeholderImage:options:  会先把 placeholderImage 显示，然后 SDWebImageManager 根据 URL 开始处理图片。    ###2. 进入 SDWebImageManagerdownloadWithURL:delegate:options:userInfo:  交给 SDImageCache">
+<meta property="og:description" content="1. 入口 setImageWithURL:placeholderImage:options: 会先把 placeholderImage 显示，然后 SDWebImageManager 根据 URL 开始处理图片。    2. 进入 SDWebImageManagerdownloadWithURL:delegate:options:userInfo: 交给 SDImageCache 从缓存查找图片">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-29T02:20:14.000Z">
+<meta property="og:updated_time" content="2017-11-29T02:25:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SDWebImage基本原理">
-<meta name="twitter:description" content="###1. 入口 setImageWithURL:placeholderImage:options:  会先把 placeholderImage 显示，然后 SDWebImageManager 根据 URL 开始处理图片。    ###2. 进入 SDWebImageManagerdownloadWithURL:delegate:options:userInfo:  交给 SDImageCache">
+<meta name="twitter:description" content="1. 入口 setImageWithURL:placeholderImage:options: 会先把 placeholderImage 显示，然后 SDWebImageManager 根据 URL 开始处理图片。    2. 进入 SDWebImageManagerdownloadWithURL:delegate:options:userInfo: 交给 SDImageCache 从缓存查找图片">
 
 
 
@@ -423,60 +423,46 @@
       
 
       
-        <p>###1. <strong>入口 <code>setImageWithURL:placeholderImage:options:</code></strong></p>
-<blockquote>
+        <h2 id="1-入口-setImageWithURL-placeholderImage-options"><a href="#1-入口-setImageWithURL-placeholderImage-options" class="headerlink" title="1. 入口 setImageWithURL:placeholderImage:options:"></a>1. 入口 <code>setImageWithURL:placeholderImage:options:</code></h2><blockquote>
 <p>会先把 <code>placeholderImage</code> 显示，然后 <code>SDWebImageManager</code> 根据 URL 开始处理图片。  </p>
 </blockquote>
-<p>###2. <strong>进入 <code>SDWebImageManagerdownloadWithURL:delegate:options:userInfo:</code></strong></p>
-<blockquote>
+<h2 id="2-进入-SDWebImageManagerdownloadWithURL-delegate-options-userInfo"><a href="#2-进入-SDWebImageManagerdownloadWithURL-delegate-options-userInfo" class="headerlink" title="2. 进入 SDWebImageManagerdownloadWithURL:delegate:options:userInfo:"></a>2. 进入 <code>SDWebImageManagerdownloadWithURL:delegate:options:userInfo:</code></h2><blockquote>
 <p>交给 <code>SDImageCache</code> 从缓存查找图片是否已经下载<br><code>queryDiskCacheForKey:delegate:userInfo:</code></p>
 </blockquote>
-<p>###3. <strong>先从内存图片缓存查找是否有图片</strong></p>
-<blockquote>
+<h2 id="3-先从内存图片缓存查找是否有图片"><a href="#3-先从内存图片缓存查找是否有图片" class="headerlink" title="3. 先从内存图片缓存查找是否有图片"></a>3. 先从内存图片缓存查找是否有图片</h2><blockquote>
 <p>如果内存中已经有图片缓存，<code>SDImageCacheDelegate</code> 回调 <code>imageCache:didFindImage:forKey:userInfo:</code> 到 <code>SDWebImageManager</code>，<code>SDWebImageManagerDelegate</code>回调 <code>webImageManager:didFinishWithImage:</code>到 <code>UIImageView+WebCache</code> 等前端展示图片</p>
 </blockquote>
-<p>###4. <strong>如果内存缓存中没有</strong></p>
-<blockquote>
+<h2 id="4-如果内存缓存中没有"><a href="#4-如果内存缓存中没有" class="headerlink" title="4. 如果内存缓存中没有"></a>4. 如果内存缓存中没有</h2><blockquote>
 <p>生成 <code>NSInvocationOperation</code><br>添加到队列开始从硬盘查找图片是否已经缓存  </p>
 </blockquote>
-<p>###5. <strong>根据 <code>URLKey</code> 在硬盘缓存目录下尝试读取图片文件</strong></p>
-<blockquote>
+<h2 id="5-根据-URLKey-在硬盘缓存目录下尝试读取图片文件"><a href="#5-根据-URLKey-在硬盘缓存目录下尝试读取图片文件" class="headerlink" title="5. 根据 URLKey 在硬盘缓存目录下尝试读取图片文件"></a>5. 根据 <code>URLKey</code> 在硬盘缓存目录下尝试读取图片文件</h2><blockquote>
 <p>这一步是在 <code>NSOperation</code> 进行的操作，所以回主线程进行结果回调 <code>notifyDelegate:</code></p>
 </blockquote>
-<p>###6. <strong>如果从硬盘读取到了图片</strong></p>
-<blockquote>
+<h2 id="6-如果从硬盘读取到了图片"><a href="#6-如果从硬盘读取到了图片" class="headerlink" title="6. 如果从硬盘读取到了图片"></a>6. 如果从硬盘读取到了图片</h2><blockquote>
 <p>将图片添加到内存缓存中（如果空闲内存过小，会先清空内存缓存），<code>SDImageCacheDelegate</code> 回调 <code>imageCache:didFindImage:forKey:userInfo:</code>。<br>进而回调展示图片</p>
 </blockquote>
-<p>###7. <strong>如果从硬盘缓存目录读取不到图片</strong></p>
-<blockquote>
+<h2 id="7-如果从硬盘缓存目录读取不到图片"><a href="#7-如果从硬盘缓存目录读取不到图片" class="headerlink" title="7. 如果从硬盘缓存目录读取不到图片"></a>7. 如果从硬盘缓存目录读取不到图片</h2><blockquote>
 <p>说明所有缓存都不存在该图片，需要下载图片，<br>回调 <code>imageCache:didNotFindImageForKey:userInfo:</code></p>
 </blockquote>
-<p>###8. <strong>下载图片</strong></p>
-<blockquote>
+<h2 id="8-下载图片"><a href="#8-下载图片" class="headerlink" title="8. 下载图片"></a>8. 下载图片</h2><blockquote>
 <p>共享或重新生成一个下载器 <code>SDWebImageDownloader</code> 开始下载图片。图片下载由 <code>NSURLConnection</code> 来做，<br>实现相关 <code>delegate</code> 来判断图片下载中、下载完成和下载失败。<br><code>connection:didReceiveData:</code> 中<br>利用 <code>ImageIO</code> 做了按图片下载进度加载效果</p>
 </blockquote>
-<p>###9. <strong>数据下载完成</strong></p>
-<blockquote>
+<h2 id="9-数据下载完成"><a href="#9-数据下载完成" class="headerlink" title="9. 数据下载完成"></a>9. 数据下载完成</h2><blockquote>
 <p><code>connectionDidFinishLoading:</code> 数据下载完成后交给 <code>SDWebImageDecoder</code> 做图片解码处理</p>
 </blockquote>
-<p>###10. <strong>图片解码</strong></p>
-<blockquote>
+<h2 id="10-图片解码"><a href="#10-图片解码" class="headerlink" title="10. 图片解码"></a>10. 图片解码</h2><blockquote>
 <p>图片解码处理在一个 NSOperationQueue 完成，<br>不会拖慢主线程 UI。如果有需要对下载的图片进行二次处理，<br>最好也在这里完成，效率会好很多。</p>
 </blockquote>
-<p>###11. <strong>解码完成</strong></p>
-<blockquote>
+<h2 id="11-解码完成"><a href="#11-解码完成" class="headerlink" title="11. 解码完成"></a>11. 解码完成</h2><blockquote>
 <p>在主线程 <code>notifyDelegateOnMainThreadWithInfo:</code><br>宣告解码完成，<br><code>imageDecoder:didFinishDecodingImage:userInfo:</code><br>回调给 <code>SDWebImageDownloader</code>。</p>
 </blockquote>
-<p>###12. <strong>图片下载完成</strong></p>
-<blockquote>
+<h2 id="12-图片下载完成"><a href="#12-图片下载完成" class="headerlink" title="12. 图片下载完成"></a>12. 图片下载完成</h2><blockquote>
 <p><code>imageDownloader:didFinishWithImage:</code><br>回调给 <code>SDWebImageManager</code> 告知图片下载完成。<br>通知所有的 <code>downloadDelegates</code> 下载完成，<br>回调给需要的地方展示图片。</p>
 </blockquote>
-<p>###13. <strong>缓存图片</strong></p>
-<blockquote>
+<h2 id="13-缓存图片"><a href="#13-缓存图片" class="headerlink" title="13. 缓存图片"></a>13. 缓存图片</h2><blockquote>
 <p>将图片保存到 <code>SDImageCache</code> 中，<br>内存缓存和硬盘缓存同时保存。<br>写文件到硬盘也在以单独 <code>NSInvocationOperation</code> 完成，<br>避免拖慢主线程。</p>
 </blockquote>
-<p>###14. <strong>其他</strong></p>
-<blockquote>
+<h2 id="14-其他"><a href="#14-其他" class="headerlink" title="14. 其他"></a>14. 其他</h2><blockquote>
 <ul>
 <li><code>SDImageCache</code> 在初始化的时候会注册一些消息通知<br>在内存警告或退到后台的时候清理内存图片缓存，<br>应用结束的时候清理过期图片。  </li>
 <li><code>SDWebImage</code> 也提供了 <code>UIButton+WebCache</code> 和<br><code>MKAnnotationView+WebCache</code>，方便使用。</li>
@@ -609,8 +595,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -688,6 +683,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-入口-setImageWithURL-placeholderImage-options"><span class="nav-text">1. 入口 setImageWithURL:placeholderImage:options:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-进入-SDWebImageManagerdownloadWithURL-delegate-options-userInfo"><span class="nav-text">2. 进入 SDWebImageManagerdownloadWithURL:delegate:options:userInfo:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-先从内存图片缓存查找是否有图片"><span class="nav-text">3. 先从内存图片缓存查找是否有图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-如果内存缓存中没有"><span class="nav-text">4. 如果内存缓存中没有</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-根据-URLKey-在硬盘缓存目录下尝试读取图片文件"><span class="nav-text">5. 根据 URLKey 在硬盘缓存目录下尝试读取图片文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-如果从硬盘读取到了图片"><span class="nav-text">6. 如果从硬盘读取到了图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-如果从硬盘缓存目录读取不到图片"><span class="nav-text">7. 如果从硬盘缓存目录读取不到图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-下载图片"><span class="nav-text">8. 下载图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-数据下载完成"><span class="nav-text">9. 数据下载完成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-图片解码"><span class="nav-text">10. 图片解码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-解码完成"><span class="nav-text">11. 解码完成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-图片下载完成"><span class="nav-text">12. 图片下载完成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-缓存图片"><span class="nav-text">13. 缓存图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-其他"><span class="nav-text">14. 其他</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
