@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="iOS,内存,Xcode,Instruments," />
+  <meta name="keywords" content="iOS,SDWebImage," />
 
 
 
@@ -86,29 +86,18 @@
 
 
 
-<meta name="description" content="Xcode下查看app内存使用情况有2种方法：  Navigator导航栏中的Debug navigator中的Memory  Instruments     1. Debug navigator中的Memory此方法是查看内存最简单直接有效的方法，真机调试时，通过Debug navigator中Memory查看app">
-<meta name="keywords" content="iOS,内存,Xcode,Instruments">
+<meta name="description" content="1. 入口 setImageWithURL:placeholderImage:options: 会先把 placeholderImage 显示，然后 SDWebImageManager 根据 URL 开始处理图片。    2. 进入 SDWebImageManagerdownloadWithURL:delegate:o">
+<meta name="keywords" content="iOS,SDWebImage">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何分析App内存">
-<meta property="og:url" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/index.html">
+<meta property="og:title" content="SDWebImage基本原理">
+<meta property="og:url" content="https://hkm5558.github.io/2017/11/29/SDWebImage基本原理/index.html">
 <meta property="og:site_name" content="渐行渐远的博客">
-<meta property="og:description" content="Xcode下查看app内存使用情况有2种方法：  Navigator导航栏中的Debug navigator中的Memory  Instruments     1. Debug navigator中的Memory此方法是查看内存最简单直接有效的方法，真机调试时，通过Debug navigator中Memory查看app内存，入口如图  根据这个值查看app内存占用，这个内存是当前app占用的总内">
+<meta property="og:description" content="1. 入口 setImageWithURL:placeholderImage:options: 会先把 placeholderImage 显示，然后 SDWebImageManager 根据 URL 开始处理图片。    2. 进入 SDWebImageManagerdownloadWithURL:delegate:options:userInfo: 交给 SDImageCache 从缓存查找图片">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic1.jpeg">
-<meta property="og:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic2.jpeg">
-<meta property="og:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic3.jpeg">
-<meta property="og:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic4.jpeg">
-<meta property="og:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic5.jpeg">
-<meta property="og:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic6.jpeg">
-<meta property="og:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic7.jpeg">
-<meta property="og:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic8.jpeg">
-<meta property="og:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic9.jpeg">
-<meta property="og:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic10.jpeg">
-<meta property="og:updated_time" content="2017-11-28T10:14:28.000Z">
+<meta property="og:updated_time" content="2017-11-29T02:25:07.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何分析App内存">
-<meta name="twitter:description" content="Xcode下查看app内存使用情况有2种方法：  Navigator导航栏中的Debug navigator中的Memory  Instruments     1. Debug navigator中的Memory此方法是查看内存最简单直接有效的方法，真机调试时，通过Debug navigator中Memory查看app内存，入口如图  根据这个值查看app内存占用，这个内存是当前app占用的总内">
-<meta name="twitter:image" content="https://hkm5558.github.io/2017/11/18/如何分析App内存/pic1.jpeg">
+<meta name="twitter:title" content="SDWebImage基本原理">
+<meta name="twitter:description" content="1. 入口 setImageWithURL:placeholderImage:options: 会先把 placeholderImage 显示，然后 SDWebImageManager 根据 URL 开始处理图片。    2. 进入 SDWebImageManagerdownloadWithURL:delegate:options:userInfo: 交给 SDImageCache 从缓存查找图片">
 
 
 
@@ -138,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="https://hkm5558.github.io/2017/11/18/如何分析App内存/"/>
+  <link rel="canonical" href="https://hkm5558.github.io/2017/11/29/SDWebImage基本原理/"/>
 
 
 
 
 
-  <title>如何分析App内存 | 渐行渐远的博客</title>
+  <title>SDWebImage基本原理 | 渐行渐远的博客</title>
   
 
 
@@ -309,7 +298,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hkm5558.github.io/2017/11/18/如何分析App内存/">
+    <link itemprop="mainEntityOfPage" href="https://hkm5558.github.io/2017/11/29/SDWebImage基本原理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="渐行渐远">
@@ -326,7 +315,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">如何分析App内存</h2>
+          <h2 class="post-title" itemprop="name headline">SDWebImage基本原理</h2>
         
 
         <div class="post-meta">
@@ -338,8 +327,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-18T11:33:39+08:00">
-                2017-11-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-29T09:52:08+08:00">
+                2017-11-29
               </time>
             
 
@@ -397,7 +386,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  585 字
+                  623 字
                 </span>
               
 
@@ -434,54 +423,50 @@
       
 
       
-        <blockquote>
-<p>Xcode下查看app内存使用情况有2种方法：</p>
+        <h2 id="1-入口-setImageWithURL-placeholderImage-options"><a href="#1-入口-setImageWithURL-placeholderImage-options" class="headerlink" title="1. 入口 setImageWithURL:placeholderImage:options:"></a>1. 入口 <code>setImageWithURL:placeholderImage:options:</code></h2><blockquote>
+<p>会先把 <code>placeholderImage</code> 显示，然后 <code>SDWebImageManager</code> 根据 URL 开始处理图片。  </p>
+</blockquote>
+<h2 id="2-进入-SDWebImageManagerdownloadWithURL-delegate-options-userInfo"><a href="#2-进入-SDWebImageManagerdownloadWithURL-delegate-options-userInfo" class="headerlink" title="2. 进入 SDWebImageManagerdownloadWithURL:delegate:options:userInfo:"></a>2. 进入 <code>SDWebImageManagerdownloadWithURL:delegate:options:userInfo:</code></h2><blockquote>
+<p>交给 <code>SDImageCache</code> 从缓存查找图片是否已经下载<br><code>queryDiskCacheForKey:delegate:userInfo:</code></p>
+</blockquote>
+<h2 id="3-先从内存图片缓存查找是否有图片"><a href="#3-先从内存图片缓存查找是否有图片" class="headerlink" title="3. 先从内存图片缓存查找是否有图片"></a>3. 先从内存图片缓存查找是否有图片</h2><blockquote>
+<p>如果内存中已经有图片缓存，<code>SDImageCacheDelegate</code> 回调 <code>imageCache:didFindImage:forKey:userInfo:</code> 到 <code>SDWebImageManager</code>，<code>SDWebImageManagerDelegate</code>回调 <code>webImageManager:didFinishWithImage:</code>到 <code>UIImageView+WebCache</code> 等前端展示图片</p>
+</blockquote>
+<h2 id="4-如果内存缓存中没有"><a href="#4-如果内存缓存中没有" class="headerlink" title="4. 如果内存缓存中没有"></a>4. 如果内存缓存中没有</h2><blockquote>
+<p>生成 <code>NSInvocationOperation</code><br>添加到队列开始从硬盘查找图片是否已经缓存  </p>
+</blockquote>
+<h2 id="5-根据-URLKey-在硬盘缓存目录下尝试读取图片文件"><a href="#5-根据-URLKey-在硬盘缓存目录下尝试读取图片文件" class="headerlink" title="5. 根据 URLKey 在硬盘缓存目录下尝试读取图片文件"></a>5. 根据 <code>URLKey</code> 在硬盘缓存目录下尝试读取图片文件</h2><blockquote>
+<p>这一步是在 <code>NSOperation</code> 进行的操作，所以回主线程进行结果回调 <code>notifyDelegate:</code></p>
+</blockquote>
+<h2 id="6-如果从硬盘读取到了图片"><a href="#6-如果从硬盘读取到了图片" class="headerlink" title="6. 如果从硬盘读取到了图片"></a>6. 如果从硬盘读取到了图片</h2><blockquote>
+<p>将图片添加到内存缓存中（如果空闲内存过小，会先清空内存缓存），<code>SDImageCacheDelegate</code> 回调 <code>imageCache:didFindImage:forKey:userInfo:</code>。<br>进而回调展示图片</p>
+</blockquote>
+<h2 id="7-如果从硬盘缓存目录读取不到图片"><a href="#7-如果从硬盘缓存目录读取不到图片" class="headerlink" title="7. 如果从硬盘缓存目录读取不到图片"></a>7. 如果从硬盘缓存目录读取不到图片</h2><blockquote>
+<p>说明所有缓存都不存在该图片，需要下载图片，<br>回调 <code>imageCache:didNotFindImageForKey:userInfo:</code></p>
+</blockquote>
+<h2 id="8-下载图片"><a href="#8-下载图片" class="headerlink" title="8. 下载图片"></a>8. 下载图片</h2><blockquote>
+<p>共享或重新生成一个下载器 <code>SDWebImageDownloader</code> 开始下载图片。图片下载由 <code>NSURLConnection</code> 来做，<br>实现相关 <code>delegate</code> 来判断图片下载中、下载完成和下载失败。<br><code>connection:didReceiveData:</code> 中<br>利用 <code>ImageIO</code> 做了按图片下载进度加载效果</p>
+</blockquote>
+<h2 id="9-数据下载完成"><a href="#9-数据下载完成" class="headerlink" title="9. 数据下载完成"></a>9. 数据下载完成</h2><blockquote>
+<p><code>connectionDidFinishLoading:</code> 数据下载完成后交给 <code>SDWebImageDecoder</code> 做图片解码处理</p>
+</blockquote>
+<h2 id="10-图片解码"><a href="#10-图片解码" class="headerlink" title="10. 图片解码"></a>10. 图片解码</h2><blockquote>
+<p>图片解码处理在一个 NSOperationQueue 完成，<br>不会拖慢主线程 UI。如果有需要对下载的图片进行二次处理，<br>最好也在这里完成，效率会好很多。</p>
+</blockquote>
+<h2 id="11-解码完成"><a href="#11-解码完成" class="headerlink" title="11. 解码完成"></a>11. 解码完成</h2><blockquote>
+<p>在主线程 <code>notifyDelegateOnMainThreadWithInfo:</code><br>宣告解码完成，<br><code>imageDecoder:didFinishDecodingImage:userInfo:</code><br>回调给 <code>SDWebImageDownloader</code>。</p>
+</blockquote>
+<h2 id="12-图片下载完成"><a href="#12-图片下载完成" class="headerlink" title="12. 图片下载完成"></a>12. 图片下载完成</h2><blockquote>
+<p><code>imageDownloader:didFinishWithImage:</code><br>回调给 <code>SDWebImageManager</code> 告知图片下载完成。<br>通知所有的 <code>downloadDelegates</code> 下载完成，<br>回调给需要的地方展示图片。</p>
+</blockquote>
+<h2 id="13-缓存图片"><a href="#13-缓存图片" class="headerlink" title="13. 缓存图片"></a>13. 缓存图片</h2><blockquote>
+<p>将图片保存到 <code>SDImageCache</code> 中，<br>内存缓存和硬盘缓存同时保存。<br>写文件到硬盘也在以单独 <code>NSInvocationOperation</code> 完成，<br>避免拖慢主线程。</p>
+</blockquote>
+<h2 id="14-其他"><a href="#14-其他" class="headerlink" title="14. 其他"></a>14. 其他</h2><blockquote>
 <ul>
-<li><p>Navigator导航栏中的Debug navigator中的Memory</p>
-</li>
-<li><p>Instruments</p>
-</li>
-</ul>
-</blockquote>
-<h2 id="1-Debug-navigator中的Memory"><a href="#1-Debug-navigator中的Memory" class="headerlink" title=" 1. Debug navigator中的Memory"></a> 1. Debug navigator中的Memory</h2><p>此方法是查看内存最简单直接有效的方法，真机调试时，通过Debug navigator中Memory查看app内存，入口如图</p>
-<img src="/2017/11/18/如何分析App内存/pic1.jpeg" title="图片来源见水印">
-<p>根据这个值查看app内存占用，这个内存是当前app占用的总内存，是堆栈内存、虚拟内存（OpenGL占用的显存算在虚拟内存中里面）的总和。</p>
-<h2 id="2-Instruments"><a href="#2-Instruments" class="headerlink" title="2. Instruments"></a>2. Instruments</h2><p>启动Instruments的方法是，Product-&gt;Profile，经过漫长的编译时间后，出现Instruments界面，如下图</p>
-<img src="/2017/11/18/如何分析App内存/pic2.jpeg" title="图片来源见水印">
-<p>Instruments中，可以分析内存的工具有Activity Monitor、Allocations、Leaks。</p>
-<blockquote>
-<p><strong>Leaks</strong><br>Leaks是检测内存泄露的工具，很有用。Leaks运行中，看到下面这个红叉叉就表示有内存泄露了</p>
-<img src="/2017/11/18/如何分析App内存/pic3.jpeg" title="图片来源见水印">  
-</blockquote>
-<hr>
-<blockquote>
-<p><strong>Allocations</strong><br>Allocations是检测堆栈内存的，下面的VM tracker检测虚拟内存。Allocations运行起来如下图</p>
-<img src="/2017/11/18/如何分析App内存/pic4.jpeg" title="图片来源见水印">
-<p>Allocations永远比Debug navigator Memory中显示的内存要小，就是因为Allocations中没有统计虚拟内存。<br>下图参考：<br><img src="/2017/11/18/如何分析App内存/pic5.jpeg" title="图片来源见水印"></p>
-<p>部分malloc出来的内存也算在虚拟内存中，下图参考自A look at how malloc works on the Mac<br><img src="/2017/11/18/如何分析App内存/pic6.jpeg" title="图片来源见水印"></p>
-</blockquote>
-<hr>
-<blockquote>
-<p><strong>Activity monitor</strong><br>Activity monitor看手机整体内存情况的，这里的显示app内存值和Debug navigator中的Memory显示的值是一样的<br><img src="/2017/11/18/如何分析App内存/pic7.jpeg" title="图片来源见水印"></p>
-</blockquote>
-<hr>
-<blockquote>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
-<li><p>App最多能占用多少内存不闪退</p>
-<blockquote>
-<p>占用机器内存的一半左右就会闪退，和系统版本、后台程序数有关。</p>
-<img src="/2017/11/18/如何分析App内存/pic8.jpeg" title="图片来源见水印">
-<p>不同渠道对内存有不同的要求，例如如下某渠道</p>
-<img src="/2017/11/18/如何分析App内存/pic9.jpeg" title="图片来源见水印">
-</blockquote>
-</li>
-<li><p>iOS的App为什么内存没有泄露，内存却降不下来</p>
-<blockquote>
-<p> eg: 创建大概20个哥布林spine动画，此时内存占用46M，然后释放掉，内存占用竟然还是46M，以为是spine有内存泄露，Leaks检测没有发现内存泄露。反复加载释放20个哥布林，内存都没有超过48M，但是为毛内存没有下降，而是维持在46M左右</p>
-<img src="/2017/11/18/如何分析App内存/pic10.jpeg" title="图片来源见水印">
-<p>因为<br>（1）图片加入了TextureCache，占用了部分内存<br>（2）malloc出来的一部分内存算到了VM（虚拟内存）中，为了下次malloc速度更快，这部分内存虽然调用了free，但iOS系统依然没有将其回收。这就是上面说的部分malloc出来的内存也算在虚拟内存中。</p>
-</blockquote>
-</li>
+<li><code>SDImageCache</code> 在初始化的时候会注册一些消息通知<br>在内存警告或退到后台的时候清理内存图片缓存，<br>应用结束的时候清理过期图片。  </li>
+<li><code>SDWebImage</code> 也提供了 <code>UIButton+WebCache</code> 和<br><code>MKAnnotationView+WebCache</code>，方便使用。</li>
+<li><code>SDWebImagePrefetcher</code> 可以预先下载图片，<br>方便后续使用。</li>
 </ul>
 </blockquote>
 
@@ -517,7 +502,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://hkm5558.github.io/2017/11/18/如何分析App内存/" title="如何分析App内存">https://hkm5558.github.io/2017/11/18/如何分析App内存/</a>
+    <a href="https://hkm5558.github.io/2017/11/29/SDWebImage基本原理/" title="SDWebImage基本原理">https://hkm5558.github.io/2017/11/29/SDWebImage基本原理/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
@@ -534,11 +519,7 @@
           
             <a href="/tags/iOS/" rel="tag"><i class="fa fa-tag"></i> iOS</a>
           
-            <a href="/tags/内存/" rel="tag"><i class="fa fa-tag"></i> 内存</a>
-          
-            <a href="/tags/Xcode/" rel="tag"><i class="fa fa-tag"></i> Xcode</a>
-          
-            <a href="/tags/Instruments/" rel="tag"><i class="fa fa-tag"></i> Instruments</a>
+            <a href="/tags/SDWebImage/" rel="tag"><i class="fa fa-tag"></i> SDWebImage</a>
           
         </div>
       
@@ -551,8 +532,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/17/内存的几大区域/" rel="next" title="内存的几大区域">
-                <i class="fa fa-chevron-left"></i> 内存的几大区域
+              <a href="/2017/11/28/KVC机制如何通过key找到value/" rel="next" title="KVC机制如何通过key找到value">
+                <i class="fa fa-chevron-left"></i> KVC机制如何通过key找到value
               </a>
             
           </div>
@@ -561,8 +542,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/11/23/解决-TableView-滑动卡顿/" rel="prev" title="解决 TableView 滑动卡顿">
-                解决 TableView 滑动卡顿 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/29/Swift中enum、struct、class三者异同/" rel="prev" title="Swift中enum、struct、class三者异同">
+                Swift中enum、struct、class三者异同 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -716,7 +697,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Debug-navigator中的Memory"><span class="nav-text"> 1. Debug navigator中的Memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Instruments"><span class="nav-text">2. Instruments</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-text">其他</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-入口-setImageWithURL-placeholderImage-options"><span class="nav-text">1. 入口 setImageWithURL:placeholderImage:options:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-进入-SDWebImageManagerdownloadWithURL-delegate-options-userInfo"><span class="nav-text">2. 进入 SDWebImageManagerdownloadWithURL:delegate:options:userInfo:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-先从内存图片缓存查找是否有图片"><span class="nav-text">3. 先从内存图片缓存查找是否有图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-如果内存缓存中没有"><span class="nav-text">4. 如果内存缓存中没有</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-根据-URLKey-在硬盘缓存目录下尝试读取图片文件"><span class="nav-text">5. 根据 URLKey 在硬盘缓存目录下尝试读取图片文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-如果从硬盘读取到了图片"><span class="nav-text">6. 如果从硬盘读取到了图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-如果从硬盘缓存目录读取不到图片"><span class="nav-text">7. 如果从硬盘缓存目录读取不到图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-下载图片"><span class="nav-text">8. 下载图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-数据下载完成"><span class="nav-text">9. 数据下载完成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-图片解码"><span class="nav-text">10. 图片解码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-解码完成"><span class="nav-text">11. 解码完成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#12-图片下载完成"><span class="nav-text">12. 图片下载完成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-缓存图片"><span class="nav-text">13. 缓存图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#14-其他"><span class="nav-text">14. 其他</span></a></li></ol></div>
             
 
           </div>
