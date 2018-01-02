@@ -89,17 +89,17 @@
 <meta name="keywords" content="iOS,Runtime">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关于class_copyIvarList方法">
-<meta property="og:url" content="https://hkm5558.github.io/2017/12/19/关于class-copyIvarList方法/index.html">
+<meta property="og:url" content="https://hkm5558.github.io/2017/12/18/关于class-copyIvarList方法/index.html">
 <meta property="og:site_name" content="渐行渐远的博客">
 <meta property="og:description" content="在runtime.h中，你可以通过其中的class_copyIvarList方法来获取实例变量。具体的实现如下（记得导入头文件#import &amp;lt;objc/runtime.h&amp;gt;） 12345678910111213141516- (NSArray *)ivarArray:(Class)cls &amp;#123;    unsigned int ivarCount = 0;    Ivar *i">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://hkm5558.github.io/2017/12/19/关于class-copyIvarList方法/pic1.png">
-<meta property="og:image" content="https://hkm5558.github.io/2017/12/19/关于class-copyIvarList方法/pic2.png">
-<meta property="og:updated_time" content="2018-01-02T10:34:18.482Z">
+<meta property="og:image" content="https://hkm5558.github.io/2017/12/18/关于class-copyIvarList方法/pic1.png">
+<meta property="og:image" content="https://hkm5558.github.io/2017/12/18/关于class-copyIvarList方法/pic2.png">
+<meta property="og:updated_time" content="2018-01-02T10:46:51.415Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关于class_copyIvarList方法">
 <meta name="twitter:description" content="在runtime.h中，你可以通过其中的class_copyIvarList方法来获取实例变量。具体的实现如下（记得导入头文件#import &amp;lt;objc/runtime.h&amp;gt;） 12345678910111213141516- (NSArray *)ivarArray:(Class)cls &amp;#123;    unsigned int ivarCount = 0;    Ivar *i">
-<meta name="twitter:image" content="https://hkm5558.github.io/2017/12/19/关于class-copyIvarList方法/pic1.png">
+<meta name="twitter:image" content="https://hkm5558.github.io/2017/12/18/关于class-copyIvarList方法/pic1.png">
 
 
 
@@ -129,7 +129,7 @@
 
 
 
-  <link rel="canonical" href="https://hkm5558.github.io/2017/12/19/关于class-copyIvarList方法/"/>
+  <link rel="canonical" href="https://hkm5558.github.io/2017/12/18/关于class-copyIvarList方法/"/>
 
 
 
@@ -300,7 +300,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://hkm5558.github.io/2017/12/19/关于class-copyIvarList方法/">
+    <link itemprop="mainEntityOfPage" href="https://hkm5558.github.io/2017/12/18/关于class-copyIvarList方法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="渐行渐远">
@@ -329,8 +329,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-19T17:49:51+08:00">
-                2017-12-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-18T17:49:51+08:00">
+                2017-12-18
               </time>
             
 
@@ -432,7 +432,7 @@
 <p><code>Ivar</code>是一个叫做<code>objc_ivar</code>的结构体指针,其中的 <code>ifdef</code>判断是判断当前设备是否是64位设备，这里可以延伸出一个方法：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//判断当前设备是否是64位设备，也可以用这个方法判断是否是32位设备</span></span><br><span class="line">- (<span class="built_in">BOOL</span>)is64Bit &#123;</span><br><span class="line">    <span class="meta">#if defined(__LP64__) &amp;&amp; __LP64__</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">YES</span>;</span><br><span class="line">    <span class="meta">#else</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NO</span>;</span><br><span class="line">    <span class="meta">#endif</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">OBJC_EXPORT Ivar _Nonnull * _Nullable</span><br><span class="line">class_copyIvarList(Class _Nullable cls, <span class="keyword">unsigned</span> <span class="keyword">int</span> * _Nullable outCount) </span><br><span class="line">    OBJC_AVAILABLE(<span class="number">10.5</span>, <span class="number">2.0</span>, <span class="number">9.0</span>, <span class="number">1.0</span>, <span class="number">2.0</span>);</span><br></pre></td></tr></table></figure>
-<p><code>class_copyIvarList</code>的注释如下：<br><img src="/2017/12/19/关于class-copyIvarList方法/pic1.png" title="class_copyIvarList"></p>
+<p><code>class_copyIvarList</code>的注释如下：<br><img src="/2017/12/18/关于class-copyIvarList方法/pic1.png" title="class_copyIvarList"></p>
 <p>它返回的是一个<code>Ivar</code>的数组，这个数组里面包含了你要查看类的所有实例变量，但是不包括从父类继承过来的。如果你传入的类没有实例变量或者该<code>class</code>为<code>Nil</code>,那么该方法返回的就是<code>NULL</code>，<code>count</code>值也就变成了0。有一点需要注意：你<strong>必须使用<code>free()</code>方法</strong>将该数组释放。<br>然后就是通过<code>for</code>循环遍历，通过<code>ivar _ getName</code>拿到<code>ivarName</code>。<br>以上便是对<code>clas_copyIvarList</code>的介绍。<br>它还有一个最常用的使用方式（在开发中经常用到的）：根据字典或者<code>json</code>字符串转化为<code>model</code>，在网络请求返回数据时经常用到。使用方法就是自己写一个基类的<code>model</code>，然后让项目中用到的<code>model</code>都继承自此基类，基类中的关键代码如下：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="keyword">instancetype</span>)km_modelFromDic:(<span class="built_in">NSDictionary</span> *)dataDic &#123;</span><br><span class="line">    <span class="keyword">id</span> model = [[<span class="keyword">self</span> alloc] init];  </span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    Ivar *ivarsA = class_copyIvarList(<span class="keyword">self</span>, &amp;count);</span><br><span class="line">    <span class="keyword">if</span> (count == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> model;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; count; i++) &#123;</span><br><span class="line">        Ivar iv = ivarsA[i];</span><br><span class="line">        <span class="built_in">NSString</span> *ivarName = [<span class="built_in">NSString</span> stringWithUTF8String:ivar_getName(iv)];</span><br><span class="line">        ivarName = [ivarName substringFromIndex:<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">id</span> value = dataDic[ivarName];</span><br><span class="line">        [model setValue:value forKey:ivarName];</span><br><span class="line">    &#125;</span><br><span class="line">    free(ivarsA);</span><br><span class="line">    <span class="keyword">return</span> model;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这里是把字典转成<code>model</code>，先用<code>class_copyIvar</code>获取该<code>model</code>的所有实例变量,然后通过<code>kvc</code>对属性进行赋值。最终返回<code>model</code>。这里有个点需要注意以下几点：</p>
@@ -451,7 +451,7 @@
 <p>这样的话在实现里面没有产生实例变量，只是手动实现了<code>getter</code>和<code>setter</code>，所以就不会显示<code>text</code>属性在刚才得到的数组里面了。<br>至于数组中有<code>UILabel.h</code>里面没有的变量，这个就好理解了，有可能在<code>UILabel.m</code>里面添加了一些实例变量或者在运行时添加了这些实例变量。</p>
 <p>除此方法之外，你还可以使用<code>class_copyPropertyList</code>方法，这个是拿到的所有用 <code>@property</code> 声明的属性,包括在<code>.m</code>里面添加的属性（所以打印出来的可能要比真实在<code>.h</code>里面看到的多），具体实现和上面的获取方法类似：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">NSArray</span> *)propertyArr:(Class)cls &#123;</span><br><span class="line">    <span class="keyword">unsigned</span> count = <span class="number">0</span>;</span><br><span class="line">    objc_property_t *properties = class_copyPropertyList(cls, &amp;count);</span><br><span class="line">    <span class="keyword">if</span> (count == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">NSMutableArray</span> *arr = [[<span class="built_in">NSMutableArray</span> alloc] initWithCapacity:count];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i ++) &#123;</span><br><span class="line">        objc_property_t property = properties[i];</span><br><span class="line">        <span class="built_in">NSString</span> *propertyName = [<span class="built_in">NSString</span> stringWithUTF8String:property_getName(property)] ;</span><br><span class="line">        [arr addObject:propertyName];</span><br><span class="line">    &#125;</span><br><span class="line">    free(properties);</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>其中的<code>copyPropertyList</code>方法解释如下：<br><img src="/2017/12/19/关于class-copyIvarList方法/pic2.png" title="copyPropertyList"></p>
+<p>其中的<code>copyPropertyList</code>方法解释如下：<br><img src="/2017/12/18/关于class-copyIvarList方法/pic2.png" title="copyPropertyList"></p>
 <p>记得使用过后也要调用<code>free</code>去释放数组。（PS：在源代码中暂未找到<code>objc_property</code>结构体的说明）因此，你可以通过使用该方法来实现字典或者<code>json</code>字符串转<code>model</code>操作：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="keyword">instancetype</span>)km_modelFromDic:(<span class="built_in">NSDictionary</span> *)dataDic &#123;</span><br><span class="line">    <span class="keyword">id</span> model = [[<span class="keyword">self</span> alloc] init];</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line">    objc_property_t *properties = class_copyPropertyList([<span class="keyword">self</span> <span class="keyword">class</span>], &amp;count);</span><br><span class="line">    <span class="keyword">if</span> (count == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> model;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; count; i++) &#123;</span><br><span class="line">        objc_property_t property = properties[i];</span><br><span class="line">        <span class="built_in">NSString</span> *propertyName = [<span class="built_in">NSString</span> stringWithUTF8String:property_getName(property)];</span><br><span class="line">        <span class="keyword">id</span> value = dataDic[propertyName];</span><br><span class="line">        [model setValue:value forKey:propertyName];</span><br><span class="line">    &#125;</span><br><span class="line">    free(properties);</span><br><span class="line">    <span class="keyword">return</span> model;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>两种方式均可实现字典到<code>model</code>的转换操作。</p>
@@ -488,7 +488,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://hkm5558.github.io/2017/12/19/关于class-copyIvarList方法/" title="关于class_copyIvarList方法">https://hkm5558.github.io/2017/12/19/关于class-copyIvarList方法/</a>
+    <a href="https://hkm5558.github.io/2017/12/18/关于class-copyIvarList方法/" title="关于class_copyIvarList方法">https://hkm5558.github.io/2017/12/18/关于class-copyIvarList方法/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>
