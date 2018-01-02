@@ -6,9 +6,9 @@ categories: Question
 
 ---
 
- - 底层实现  
-----------
 
+底层实现
+----------
 
 >  block是一个指针结构体，在终端下通过clang -rewrite-objc 指令查看C++代码。
 首先创建一个OS X 工程，写一个最简单的block  
@@ -42,12 +42,15 @@ static void __main_block_func_0 (struct __main_block_impl_0 *__cself) { NSLog((N
 static struct __main_block_desc_0 { size_t reserved; size_t Block_size;} __main_block_desc_0_DATA = { 0, sizeof(struct __main_block_impl_0)};int main(int argc, const char * argv[]) {/* @autoreleasepool */ { __AtAutoreleasePool __autoreleasepool; void (*myblock)() = ((void (*) ())&__main_block_impl_0((void *)__main_block_func_0, &__main_block_desc_0_DATA)); ((void (*)(__block_impl *)) ((__block_impl *)myblock)->FuncPtr)((__block_impl *)myblock); } return 0;}
 ```
 
- - 注意事项
+ 
+
+
+注意事项
 ----------
 > block容易造成循环引用，在block里面如果使用了self，然后形成强引用时，需要打断循环引用  
 > 在MRC下用_block，在ARC下使用__weak;
 
- - 关于Block在内存中的位置
+关于Block在内存中的位置
 ----------
 > block块的存储位置（block入口的地址）可能存放在3个地方：代码区（全局区）、堆区、栈区（ARC情况下回自动拷贝到堆区，因此ARC下只有两个地方：代码区和堆区）。
 > 
