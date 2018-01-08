@@ -86,8 +86,6 @@ deploy:
 
 # algolia 搜索
 algolia:
-  applicationID: '9S64QK8IQV'
-  apiKey: 'cfec0965d458c2c339c680fdb118ecc2'
-  adminApiKey: 'cc11ce80019c9382bf00b9da4664a764'
+  applicationID: 'VKWAV59Y3R'
   indexName: ‘hexo_name’
   chunkSize: 5000
